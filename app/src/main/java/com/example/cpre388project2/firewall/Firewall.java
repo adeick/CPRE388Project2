@@ -1,24 +1,22 @@
 package com.example.cpre388project2.firewall;
 
-public class Firewall {
-    private float[] coords;
+import com.example.cpre388project2.Damageable;
+
+public class Firewall extends Damageable {
+    private int firewallLevel;
 
     /**
      * Create a new firewall
-     *
-     * @param x Starting x value
-     * @param y Starting y value
      */
-    public Firewall(float x, float y) {
-        coords = new float[]{x, y};
+    public Firewall() {
+        firewallLevel = 1;
     }
 
     /**
-     * Get firewall's coordinates on screen
-     *
-     * @return getCoords[0] = x, getCoords[1] = y
+     * @return Max health of firewall
      */
-    public float[] getCoords() {
-        return coords;
+    @Override
+    protected int getMaxHealth() {
+        return (int) (Math.pow(firewallLevel, 3) * 200);
     }
 }
