@@ -1,7 +1,10 @@
 package com.example.cpre388project2.towers;
 
-public class Tower {
+import com.example.cpre388project2.Damageable;
+
+public class Tower extends Damageable {
     private int towerLevel;
+    private float currentTowerHealth;
 
     public Tower() {
         towerLevel = 0;
@@ -43,5 +46,10 @@ public class Tower {
      */
     public int getProductionRate() {
         return towerLevel * 2;
+    }
+
+    @Override
+    protected int getMaxHealth() {
+        return 50 + towerLevel * 50;
     }
 }

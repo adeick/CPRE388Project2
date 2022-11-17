@@ -1,6 +1,8 @@
 package com.example.cpre388project2.storage;
 
-public class BitcoinStorage {
+import com.example.cpre388project2.Damageable;
+
+public class BitcoinStorage extends Damageable {
     private int storageLevel;
     private int currentAmountStored;
 
@@ -78,5 +80,10 @@ public class BitcoinStorage {
 
     private int storageCapacity() {
         return storageLevel * 200;
+    }
+
+    @Override
+    protected int getMaxHealth() {
+        return 50 + storageLevel * 50;
     }
 }
