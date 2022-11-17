@@ -39,11 +39,13 @@ public class BitcoinStorage {
 
     /**
      * Store the specified amount of bitcoin. The value is capped to only allow positive values.
+     * Storage is capped to only storage as much as the storage capacity.
      *
      * @param amount The amount of bitcoin to be stored.
      */
     public void storeAmount(int amount) {
         currentAmountStored += Math.max(1, amount);
+        currentAmountStored = Math.min(currentAmountStored, storageCapacity());
     }
 
     /**
