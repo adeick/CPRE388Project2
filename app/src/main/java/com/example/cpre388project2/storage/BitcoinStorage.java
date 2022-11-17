@@ -65,7 +65,11 @@ public class BitcoinStorage {
         return amount;
     }
 
-
+    /**
+     * Get the amount of bitcoin stored in storage.
+     *
+     * @return The amount of bitcoin stored.
+     */
     public int getAmountStored() {
         return currentAmountStored;
     }
