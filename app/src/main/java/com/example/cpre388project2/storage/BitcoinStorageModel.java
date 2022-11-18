@@ -12,8 +12,12 @@ public class BitcoinStorageModel extends ViewModel {
     }
 
     public void initialize(int level, int amount) {
-        storageLevel = new MutableLiveData<>(level);
-        currentAmountStored = new MutableLiveData<>(amount);
+        if (storageLevel == null) {
+            storageLevel = new MutableLiveData<>(level);
+        }
+        if (currentAmountStored == null) {
+            currentAmountStored = new MutableLiveData<>(amount);
+        }
     }
 
     /**
@@ -91,8 +95,8 @@ public class BitcoinStorageModel extends ViewModel {
      *
      * @return The amount of bitcoin stored.
      */
-    public int getAmountStored() {
-        return currentAmountStored.getValue();
+    public MutableLiveData<Integer> getAmountStored() {
+        return currentAmountStored;
     }
 
     private int storageCapacity() {
