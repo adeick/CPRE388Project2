@@ -1,17 +1,25 @@
 package com.example.cpre388project2.towers;
 
-import com.example.cpre388project2.Damageable;
+public class Tower {
 
-public class Tower extends Damageable {
+    private TowerTypes towerType;
     private int towerLevel;
-    private float currentTowerHealth;
+    private int towerCount;
 
-    public Tower() {
-        towerLevel = 0;
+    public Tower(TowerTypes _towerType) {
+        towerType = _towerType;
+        towerLevel = 1;
+        towerCount = 1;
     }
 
-    public Tower(int level) {
-        towerLevel = level;
+    /**
+     * Retrieve the total amount of bitcoin being produced by all towers of this type per second.
+     * Calculated as (towerLevel * towerProductionRate * numberOfTowers).
+     *
+     * @return The amount of bitcoin this tower type passively produces each second.
+     */
+    public int getProductionRate() {
+        return towerLevel * towerTypeProductionRate() * towerCount * 2;
     }
 
     /**
@@ -40,16 +48,35 @@ public class Tower extends Damageable {
     }
 
     /**
-     * Retrieve the amount of bitcoin the tower should produce each second.
-     *
-     * @return The amount of bitcoin this tower passively produces each second.
+     * Add one more tower of this type.
      */
-    public int getProductionRate() {
-        return towerLevel * 2;
+    public void addTower() {
+        addTowers(1);
     }
 
-    @Override
-    protected int getMaxHealth() {
-        return 50 + towerLevel * 50;
+    /**
+     * Add more towers of this type.
+     *
+     * @param count How many towers that should be added.
+     */
+    public void addTowers(int count) {
+        towerCount += count;
+    }
+
+    private int towerTypeProductionRate() {
+        switch (towerType) {
+            case MAINFRAME:
+                return 1;
+            case SERVER:
+                return 10;
+            case MICROPROCESSOR:
+                return 50;
+            case GPU:
+                return 100;
+            case QUANTUMCOMPUTER:
+                return 500;
+            default:
+                return 0;
+        }
     }
 }
