@@ -13,6 +13,14 @@ public class Tower {
     }
 
     /**
+     * Retrieve the type that this tower belongs to.
+     * @return The Tower Type.
+     */
+    public TowerTypes getTowerType() {
+        return towerType;
+    }
+
+    /**
      * Retrieve the total amount of bitcoin being produced by all towers of this type per second.
      * Calculated as (towerLevel * towerProductionRate * numberOfTowers).
      *

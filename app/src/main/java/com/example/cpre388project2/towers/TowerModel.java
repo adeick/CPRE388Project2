@@ -12,6 +12,24 @@ public class TowerModel extends ViewModel {
         return towers.getValue().get(i);
     }
 
+    public void AddTower(TowerTypes towerType) {
+        ArrayList<Tower> towers = getTowers();
+        for (Tower tower : towers) {
+            if (tower.getTowerType() == towerType) {
+                tower.addTower();
+                return;
+            }
+        }
+        towers.add(new Tower(towerType));
+    }
+
+    public ArrayList<Tower> getTowers() {
+        if (towers == null) {
+            towers = new MutableLiveData<>(new ArrayList<>());
+        }
+        return towers.getValue();
+    }
+
     public void setTower(int i, Tower tower) {
         if (towers == null) {
             towers = new MutableLiveData<>(new ArrayList<>());

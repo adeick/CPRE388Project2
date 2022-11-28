@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.cpre388project2.storage.BitcoinStorageModel;
+import com.example.cpre388project2.towers.Tower;
 import com.example.cpre388project2.towers.TowerModel;
+import com.example.cpre388project2.towers.TowerTypes;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +36,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void MainframeOnClick(View view) {
+        towerModel.AddTower(TowerTypes.MAINFRAME);
+    }
+
     public void towerOnClick(View view) {
-        bitcoinStorageModel.storeAmount(1);
+        int bitcoin = getBitCoinPerTower();
+        bitcoin = Math.max(1, bitcoin); // Get at least 1 bitcoin per click.
+        bitcoinStorageModel.storeAmount(bitcoin);
+    }
+
+    private int getBitCoinPerTower() {
+        int bitcoin = 0;
+        ArrayList<Tower> towers = towerModel.getTowers();
+        for (Tower tower : towers) {
+            bitcoin += tower.getProductionRate();
+        }
+        return bitcoin;
     }
 }
