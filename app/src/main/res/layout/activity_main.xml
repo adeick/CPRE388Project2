@@ -24,22 +24,57 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="84dp"
-        android:onClick="towerOnClick"
+        android:onClick="mainframeOnClick"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:onClick="MainframeOnClick"
-        android:text="Add Mainframe"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView">
+
+        <Button
+            android:id="@+id/upgradeStorageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="upgradeStorageOnClick"
+            android:text="Upgrade Storage" />
+
+        <Button
+            android:id="@+id/buyServerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="towerServerOnClick"
+            android:text="Buy Server" />
+
+        <Button
+            android:id="@+id/buyMicroprocessorButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="towerMicroProcessorOnClick"
+            android:text="Buy Microprocessor" />
+
+        <Button
+            android:id="@+id/buyGPUButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="towerGPUOnClick"
+            android:text="Buy GPU" />
+
+        <Button
+            android:id="@+id/buyQuantumButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="towerQuantumComputerOnClick"
+            android:text="Buy Quantum Computer" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

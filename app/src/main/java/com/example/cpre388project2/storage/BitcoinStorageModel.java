@@ -99,7 +99,11 @@ public class BitcoinStorageModel extends ViewModel {
         return currentAmountStored;
     }
 
+    public int getUpgradeCost() {
+        return (int) (Math.pow(storageLevel.getValue(), 2) * 100);
+    }
+
     private int storageCapacity() {
-        return storageLevel.getValue() * 200;
+        return (int) (Math.pow(storageLevel.getValue(), 2) * 200);
     }
 }
