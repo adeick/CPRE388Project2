@@ -27,7 +27,11 @@ public class Tower {
      * @return The amount of bitcoin this tower type passively produces each second.
      */
     public int getProductionRate() {
-        return towerLevel * towerTypeProductionRate() * towerCount * 2;
+        return towerLevel * towerTypeProductionRate() * towerCount;
+    }
+
+    public int getUpgradeCost() {
+        return (int) Math.pow(2, towerLevel);
     }
 
     /**
@@ -69,6 +73,21 @@ public class Tower {
      */
     public void addTowers(int count) {
         towerCount += count;
+    }
+
+    public static int getPurchaseCost(TowerTypes towerType) {
+        switch (towerType) {
+            case SERVER:
+                return 10;
+            case MICROPROCESSOR:
+                return 200;
+            case GPU:
+                return 300;
+            case QUANTUMCOMPUTER:
+                return 800;
+            default:
+                return Integer.MAX_VALUE;
+        }
     }
 
     private int towerTypeProductionRate() {
