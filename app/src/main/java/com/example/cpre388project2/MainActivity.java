@@ -1,6 +1,7 @@
 package com.example.cpre388project2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -26,6 +27,7 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity {
 
     private BitcoinStorageModel bitcoinStorageModel;
+    private TextView bitcoinCountTextView;
     private TowerModel towerModel;
     private AutoClickerViewModel autoClickerViewModel;
     private MainActivityViewModel mViewModel;
@@ -51,13 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
         bitcoinStorageModel.initialize();
 
-        TextView bitcoinCountTextView = findViewById(R.id.bitcoinCountTextView);
+        bitcoinCountTextView = findViewById(R.id.bitcoinCountTextView);
 
         towerModel.AddTower(TowerTypes.MAINFRAME);
         bitcoinStorageModel.getAmountStored().observe(this, amount -> {
             bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
         });
 
+    }
         startAutoClickers();
     }
 
