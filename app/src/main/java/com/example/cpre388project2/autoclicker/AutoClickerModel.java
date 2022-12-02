@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-public class AutoClickerViewModel extends ViewModel {
+public class AutoClickerModel extends ViewModel {
     private MutableLiveData<Integer> numAutoClickers;
 
     public int getNumAutoClickers() {

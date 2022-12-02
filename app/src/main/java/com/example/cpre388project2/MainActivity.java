@@ -1,7 +1,6 @@
 package com.example.cpre388project2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -12,8 +11,10 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.cpre388project2.hacker.Hacker;
+import com.example.cpre388project2.hacker.HackerModel;
 import com.example.cpre388project2.storage.BitcoinStorageModel;
-import com.example.cpre388project2.autoclicker.AutoClickerViewModel;
+import com.example.cpre388project2.autoclicker.AutoClickerModel;
 import com.example.cpre388project2.towers.Tower;
 import com.example.cpre388project2.towers.TowerModel;
 import com.example.cpre388project2.towers.TowerTypes;
@@ -27,16 +28,20 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity {
 
     private BitcoinStorageModel bitcoinStorageModel;
-    private TextView bitcoinCountTextView;
     private TowerModel towerModel;
-    private AutoClickerViewModel autoClickerViewModel;
+    private AutoClickerModel autoClickerModel;
+    private HackerModel hackerModel;
     private MainActivityViewModel mViewModel;
+
     private FirebaseFirestore mFirestore;
 
     private static final int RC_SIGN_IN = 9001;
 
     private Handler handler;
-    private Runnable runnable;
+    private Runnable autoClickerRunnable;
+    private Runnable hackerSpawnerRunnable;
+
+    private TextView bitcoinCountTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,46 +54,69 @@ public class MainActivity extends AppCompatActivity {
 
         bitcoinStorageModel = new ViewModelProvider(this).get(BitcoinStorageModel.class);
         towerModel = new ViewModelProvider(this).get(TowerModel.class);
-        autoClickerViewModel = new ViewModelProvider(this).get(AutoClickerViewModel.class);
+        autoClickerModel = new ViewModelProvider(this).get(AutoClickerModel.class);
+        hackerModel = new ViewModelProvider(this).get(HackerModel.class);
 
         bitcoinStorageModel.initialize();
 
         bitcoinCountTextView = findViewById(R.id.bitcoinCountTextView);
+        hideAllHackers();
 
         towerModel.AddTower(TowerTypes.MAINFRAME);
         bitcoinStorageModel.getAmountStored().observe(this, amount -> {
             bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
         });
 
+        handler = new Handler(Looper.getMainLooper());
         startAutoClickers();
+        startHackerSpawner();
     }
 
     private void startAutoClickers() {
-        handler = new Handler(Looper.getMainLooper());
-
-        int autoClickers = autoClickerViewModel.getNumAutoClickers();
+        int autoClickers = autoClickerModel.getNumAutoClickers();
         int delay = 1000 / Math.max(autoClickers, 1);
 
-        runnable = new Runnable() {
+        autoClickerRunnable = new Runnable() {
             @Override
             public void run() {
-                int autoClickers = autoClickerViewModel.getNumAutoClickers();
+                int autoClickers = autoClickerModel.getNumAutoClickers();
                 int delay = 1000 / Math.max(autoClickers, 1);
 
                 if (autoClickers > 0) {
                     gainBitcoin();
+
+                    int attackAmount = hackerModel.getTotalAttackAmount();
+                    bitcoinStorageModel.retrieveAmount(attackAmount);
                 }
                 handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
             }
         };
-        handler.postAtTime(runnable, SystemClock.uptimeMillis() + delay);
+        handler.postAtTime(autoClickerRunnable, SystemClock.uptimeMillis() + delay);
+    }
+
+    private void startHackerSpawner() {
+        int initialDelay = 15000;
+
+        hackerSpawnerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int delay = 5000;
+                int randomPos = ((int) (Math.random() * hackerModel.getMaxHackers()));
+                int randomLevel = ((int) (Math.random() * 20));
+
+                hackerModel.setHacker(randomPos, new Hacker(randomLevel));
+                showAttacker(randomPos);
+                handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
+            }
+        };
+        handler.postAtTime(hackerSpawnerRunnable, SystemClock.uptimeMillis() + initialDelay);
     }
 
     public void buyAutoClickerOnClick(View view) {
         int cost = 20;
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
-            autoClickerViewModel.incrementNumAutoClickers();
+            autoClickerModel.incrementNumAutoClickers();
         }
     }
 
@@ -200,5 +228,78 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, RC_SIGN_IN);
         mViewModel.setIsSigningIn(true);
+    }
+
+    private void hideAllHackers() {
+        findViewById(R.id.hacker0).setVisibility(View.GONE);
+        findViewById(R.id.hacker1).setVisibility(View.GONE);
+        findViewById(R.id.hacker2).setVisibility(View.GONE);
+        findViewById(R.id.hacker3).setVisibility(View.GONE);
+        findViewById(R.id.hacker4).setVisibility(View.GONE);
+        findViewById(R.id.hacker5).setVisibility(View.GONE);
+        findViewById(R.id.hacker6).setVisibility(View.GONE);
+        findViewById(R.id.hacker7).setVisibility(View.GONE);
+    }
+
+    private void showAttacker(int position) {
+        switch (position) {
+            case 0:
+                findViewById(R.id.hacker0).setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                findViewById(R.id.hacker1).setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                findViewById(R.id.hacker2).setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                findViewById(R.id.hacker3).setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                findViewById(R.id.hacker4).setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                findViewById(R.id.hacker5).setVisibility(View.VISIBLE);
+                break;
+            case 6:
+                findViewById(R.id.hacker6).setVisibility(View.VISIBLE);
+                break;
+            case 7:
+                findViewById(R.id.hacker7).setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public void hacker0OnClick(View view) {
+        hackerModel.setHacker(0, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker1OnClick(View view) {
+        hackerModel.setHacker(1, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker2OnClick(View view) {
+        hackerModel.setHacker(2, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker3OnClick(View view) {
+        hackerModel.setHacker(3, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker4OnClick(View view) {
+        hackerModel.setHacker(4, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker5OnClick(View view) {
+        hackerModel.setHacker(5, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker6OnClick(View view) {
+        hackerModel.setHacker(6, null, true);
+        view.setVisibility(View.GONE);
+    }
+    public void hacker7OnClick(View view) {
+        hackerModel.setHacker(7, null, true);
+        view.setVisibility(View.GONE);
     }
 }

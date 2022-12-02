@@ -21,9 +21,9 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="84dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="120dp"
         android:onClick="mainframeOnClick"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +32,7 @@
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -83,5 +84,86 @@
             android:text="Buy Quantum Computer" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/hacker0"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker0OnClick"
+        app:layout_constraintStart_toStartOf="@+id/hacker7"
+        app:layout_constraintTop_toTopOf="@+id/hacker1"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker1OnClick"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/hacker2"
+        app:layout_constraintStart_toEndOf="@+id/hacker0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker2OnClick"
+        app:layout_constraintEnd_toEndOf="@+id/hacker3"
+        app:layout_constraintTop_toTopOf="@+id/hacker1"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker3OnClick"
+        app:layout_constraintBottom_toTopOf="@+id/hacker4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/hacker2"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker4OnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/hacker5"
+        app:layout_constraintEnd_toEndOf="@+id/hacker3"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker6OnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/hacker5"
+        app:layout_constraintStart_toStartOf="@+id/hacker7"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:onClick="hacker7OnClick"
+        app:layout_constraintBottom_toTopOf="@+id/hacker6"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hacker0"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/hacker5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="hacker5OnClick"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/hacker4"
+        app:layout_constraintStart_toEndOf="@+id/hacker6"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@android:drawable/ic_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
