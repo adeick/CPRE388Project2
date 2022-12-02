@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
         });
 
-    }
         startAutoClickers();
     }
 
