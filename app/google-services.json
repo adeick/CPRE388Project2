@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "926403747302",
+    "project_id": "cpre388project2bitcoinclicker",
+    "storage_bucket": "cpre388project2bitcoinclicker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926403747302:android:012c7b72be5ff9a4234a27",
+        "android_client_info": {
+          "package_name": "com.example.cpre388project2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926403747302-une0bmou4s6utnequjojbqsrm1u3777e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5le7xrurF8GBevP-hVnUsmHJuwT96kzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926403747302-une0bmou4s6utnequjojbqsrm1u3777e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,7 +14,10 @@ import com.example.cpre388project2.towers.TowerModel;
 import com.example.cpre388project2.towers.TowerTypes;
 import com.example.cpre388project2.util.FirebaseUtil;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
             bitcoin += tower.getProductionRate();
         }
         return bitcoin;
+    }
+
+    public Task<QuerySnapshot> getUserDataFromFirebase(String userId) {
+        Query query = mFirestore.collection("users");
+        query.whereEqualTo("userid", userId);
+        return query.get();
     }
 
     @Override
