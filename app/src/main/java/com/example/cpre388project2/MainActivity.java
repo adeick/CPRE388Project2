@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.cpre388project2.storage.BitcoinStorageModel;
+import com.example.cpre388project2.autoclicker.AutoClickerViewModel;
 import com.example.cpre388project2.towers.Tower;
 import com.example.cpre388project2.towers.TowerModel;
 import com.example.cpre388project2.towers.TowerTypes;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BitcoinStorageModel bitcoinStorageModel;
     private TowerModel towerModel;
+    private AutoClickerViewModel autoClickerViewModel;
     private MainActivityViewModel mViewModel;
     private FirebaseFirestore mFirestore;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         bitcoinStorageModel = new ViewModelProvider(this).get(BitcoinStorageModel.class);
         towerModel = new ViewModelProvider(this).get(TowerModel.class);
+        autoClickerViewModel = new ViewModelProvider(this).get(AutoClickerViewModel.class);
 
         bitcoinStorageModel.initialize();
 
@@ -61,14 +64,30 @@ public class MainActivity extends AppCompatActivity {
     private void startAutoClickers() {
         handler = new Handler(Looper.getMainLooper());
 
+        int autoClickers = autoClickerViewModel.getNumAutoClickers();
+        int delay = 1000 / Math.max(autoClickers, 1);
+
         runnable = new Runnable() {
             @Override
             public void run() {
-                gainBitcoin(1);
-                handler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
+                int autoClickers = autoClickerViewModel.getNumAutoClickers();
+                int delay = 1000 / Math.max(autoClickers, 1);
+
+                if (autoClickers > 0) {
+                    gainBitcoin();
+                }
+                handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
             }
         };
-        handler.postAtTime(runnable, SystemClock.uptimeMillis() + 1000);
+        handler.postAtTime(runnable, SystemClock.uptimeMillis() + delay);
+    }
+
+    public void buyAutoClickerOnClick(View view) {
+        int cost = 20;
+        if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
+            bitcoinStorageModel.retrieveAmount(cost);
+            autoClickerViewModel.incrementNumAutoClickers();
+        }
     }
 
     public void towerServerOnClick(View view) {
@@ -131,11 +150,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mainframeOnClick(View view) {
-        gainBitcoin(1);
+        gainBitcoin();
     }
 
-    private void gainBitcoin(int times) {
-        int bitcoin = getBitCoinPerTower() * times;
+    private void gainBitcoin() {
+        int bitcoin = getBitCoinPerTower();
         bitcoinStorageModel.storeAmount(bitcoin);
     }
 

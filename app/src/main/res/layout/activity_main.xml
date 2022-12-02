@@ -41,6 +41,13 @@
         app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView">
 
         <Button
+            android:id="@+id/buyAutoClickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="buyAutoClickerOnClick"
+            android:text="Buy AutoClicker" />
+
+        <Button
             android:id="@+id/upgradeStorageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
