@@ -77,7 +77,7 @@ public class BitcoinStorageModel extends ViewModel {
      */
     public int retrieveAmount(int amount) {
         if (currentAmountStored.getValue() > 0) {
-            amount = Math.max(1, amount);
+            amount = Math.max(0, amount);
             if (amount > currentAmountStored.getValue()) {
                 amount = currentAmountStored.getValue();
                 currentAmountStored.setValue(0);
@@ -99,7 +99,11 @@ public class BitcoinStorageModel extends ViewModel {
         return currentAmountStored;
     }
 
+    public int getUpgradeCost() {
+        return (int) (Math.pow(2, storageLevel.getValue() * 2) * 100);
+    }
+
     private int storageCapacity() {
-        return storageLevel.getValue() * 200;
+        return (int) (Math.pow(2, storageLevel.getValue() * 3) * 100);
     }
 }
