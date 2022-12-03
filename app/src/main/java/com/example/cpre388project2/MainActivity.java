@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cpre388project2.hacker.Hacker;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable hackerSpawnerRunnable;
 
     private TextView bitcoinCountTextView;
+    private Button allianceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
         hideAllHackers();
 
         handler = new Handler(Looper.getMainLooper());
+
+        allianceButton = findViewById(R.id.allianceButton);
+        allianceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                goToAlliances();
+            }
+        });
+
     }
 
     private void startAutoClickers() {
@@ -100,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postAtTime(autoClickerRunnable, SystemClock.uptimeMillis() + delay);
+    }
+
+    private void goToAlliances() {
+        Intent switchActivityIntent = new Intent(this, AllianceActivity.class);
+        startActivity(switchActivityIntent);
     }
 
     private void startHackerSpawner() {
@@ -274,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
         data.put("bitcoins", 0);
+        data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));
 
         mFirestore.collection("users").add(data)
