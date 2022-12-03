@@ -1,6 +1,8 @@
 package com.example.cpre388project2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -20,13 +22,21 @@ import com.example.cpre388project2.towers.TowerModel;
 import com.example.cpre388project2.towers.TowerTypes;
 import com.example.cpre388project2.util.FirebaseUtil;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewModel mViewModel;
 
     private FirebaseFirestore mFirestore;
+    private DocumentReference userDocRef;
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -60,19 +71,13 @@ public class MainActivity extends AppCompatActivity {
         autoClickerModel = new ViewModelProvider(this).get(AutoClickerModel.class);
         hackerModel = new ViewModelProvider(this).get(HackerModel.class);
 
-        bitcoinStorageModel.initialize();
+//        bitcoinStorageModel.initialize();
+//        setupUser(FirebaseUtil.getAuth().getUid());
 
         bitcoinCountTextView = findViewById(R.id.bitcoinCountTextView);
         hideAllHackers();
 
-        towerModel.AddTower(TowerTypes.MAINFRAME);
-        bitcoinStorageModel.getAmountStored().observe(this, amount -> {
-            bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
-        });
-
         handler = new Handler(Looper.getMainLooper());
-        startAutoClickers();
-        startHackerSpawner();
     }
 
     private void startAutoClickers() {
@@ -200,10 +205,39 @@ public class MainActivity extends AppCompatActivity {
         return bitcoin;
     }
 
-    public Task<QuerySnapshot> getUserDataFromFirebase(String userId) {
-        Query query = mFirestore.collection("users");
-        query.whereEqualTo("userid", userId);
-        return query.get();
+    public void setupUser(String userId) {
+        LifecycleOwner owner = this;
+        mFirestore.collection("users")
+                .whereEqualTo("userid", userId)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) { // User data exists
+                                DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
+                                userDocRef = userInfo.getReference();
+                                // Set up user from existing data
+                                bitcoinStorageModel.initialize(1, (Integer) userInfo.getDouble("bitcoins").intValue());
+                                finishSetup(owner);
+                                return;
+                            }
+                        }
+                        createUser(userId);
+                        // User data doesn't exist
+                        bitcoinStorageModel.initialize();
+                        finishSetup(owner);
+                    }
+                });
+    }
+
+    private void finishSetup(LifecycleOwner owner) {
+        towerModel.AddTower(TowerTypes.MAINFRAME);
+        bitcoinStorageModel.getAmountStored().observe(owner, amount -> {
+            bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
+        });
+
+        startAutoClickers();
+        startHackerSpawner();
     }
 
     @Override
@@ -213,13 +247,42 @@ public class MainActivity extends AppCompatActivity {
         // Start sign in if needed
         if (shouldStartSignIn()) {
             startSignIn();
-            return;
+            mViewModel.setIsSigningIn(false);
         }
+        setupUser(FirebaseUtil.getAuth().getUid());
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
+        if (!shouldStartSignIn()) {
+            saveUser(FirebaseUtil.getAuth().getUid());
+        }
+    }
+
+    public void saveUser(String userId) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("userid", userId);
+        data.put("bitcoins", bitcoinStorageModel.getAmountStored().getValue());
+        data.put("lastlogin", new Timestamp(new Date()));
+
+        userDocRef.update(data);
+    }
+
+    public void createUser(String userId) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("userid", userId);
+        data.put("bitcoins", 0);
+        data.put("lastlogin", new Timestamp(new Date()));
+
+        mFirestore.collection("users").add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        userDocRef = documentReference;
+                    }
+                });
     }
 
     private boolean shouldStartSignIn() {
@@ -283,30 +346,37 @@ public class MainActivity extends AppCompatActivity {
         hackerModel.setHacker(0, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker1OnClick(View view) {
         hackerModel.setHacker(1, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker2OnClick(View view) {
         hackerModel.setHacker(2, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker3OnClick(View view) {
         hackerModel.setHacker(3, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker4OnClick(View view) {
         hackerModel.setHacker(4, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker5OnClick(View view) {
         hackerModel.setHacker(5, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker6OnClick(View view) {
         hackerModel.setHacker(6, null, true);
         view.setVisibility(View.GONE);
     }
+
     public void hacker7OnClick(View view) {
         hackerModel.setHacker(7, null, true);
         view.setVisibility(View.GONE);
