@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="16sp"
+    android:layout_marginRight="16sp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="36sp"
+        android:clickable="false"
+        android:gravity = "center"
+        android:textSize = "24sp"
+        android:textColor = "@color/black"
+        android:shadowColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:text="@string/element_text" />
+
+    <Button
+        android:id="@+id/buttonUp"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Updgrade!"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/buttonCust"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Customize!" />
+
+    <Button
+        android:id="@+id/buttonBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="133dp"
+        android:layout_marginStart="133dp"
+        android:gravity="center"
+        android:text="Buy!" />
+</RelativeLayout>

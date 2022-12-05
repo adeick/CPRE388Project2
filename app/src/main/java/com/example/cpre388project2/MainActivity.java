@@ -81,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(Looper.getMainLooper());
 
+
+        Button butt = (Button)findViewById(R.id.toBuyScreen);
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, BuyScreen.class));
+                }
+        });
+
         allianceButton = findViewById(R.id.allianceButton);
         allianceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void startAutoClickers() {
         int autoClickers = autoClickerModel.getNumAutoClickers();
