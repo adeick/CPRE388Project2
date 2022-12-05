@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cpre388project2.hacker.Hacker;
@@ -78,7 +79,17 @@ public class MainActivity extends AppCompatActivity {
         hideAllHackers();
 
         handler = new Handler(Looper.getMainLooper());
+
+        Button butt = (Button)findViewById(R.id.toBuyScreen);
+        butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, BuyScreen.class));
+                }
+        });
     }
+
+
 
     private void startAutoClickers() {
         int autoClickers = autoClickerModel.getNumAutoClickers();
