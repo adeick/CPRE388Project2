@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable hackerSpawnerRunnable;
 
     private TextView bitcoinCountTextView;
+    private Button allianceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(Looper.getMainLooper());
 
+
         Button butt = (Button)findViewById(R.id.toBuyScreen);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, BuyScreen.class));
                 }
         });
+
+        allianceButton = findViewById(R.id.allianceButton);
+        allianceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                goToAlliances();
+            }
+        });
+
     }
 
 
@@ -111,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postAtTime(autoClickerRunnable, SystemClock.uptimeMillis() + delay);
+    }
+
+    private void goToAlliances() {
+        Intent switchActivityIntent = new Intent(this, AllianceActivity.class);
+        startActivity(switchActivityIntent);
     }
 
     private void startHackerSpawner() {
@@ -285,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
         data.put("bitcoins", 0);
+        data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));
 
         mFirestore.collection("users").add(data)
