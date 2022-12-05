@@ -300,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
     public void createUser(String userId) {
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
+        data.put("username", "");
         data.put("bitcoins", 0);
         data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));

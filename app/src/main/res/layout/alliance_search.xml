@@ -6,12 +6,13 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/se"
+        android:id="@+id/joinButton"
         android:layout_width="0dp"
         android:layout_height="85dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="16dp"
+        android:onClick="onSoftwareEngineerClick"
         android:text="Software Engineers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +25,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:onClick="onComputerEngineerClick"
         android:text="Computer Engineers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/se" />
+        app:layout_constraintTop_toBottomOf="@+id/joinButton" />
 
     <Button
         android:id="@+id/ee"
@@ -36,6 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:onClick="onElectricalEngineerClick"
         android:text="Electrical Engineers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:onClick="onCSClick"
         android:text="CS (lol)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +64,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-medium"
+        android:onClick="onMainButtonClick"
         android:text="Main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -68,11 +73,13 @@
         android:id="@+id/alliancesText"
         android:layout_width="207dp"
         android:layout_height="42dp"
+        android:layout_marginBottom="140dp"
         android:text="Alliances"
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cs" />
+        app:layout_constraintTop_toBottomOf="@+id/cs"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
