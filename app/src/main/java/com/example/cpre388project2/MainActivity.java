@@ -102,18 +102,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void startAutoClickers() {
         int autoClickers = autoClickerModel.getNumAutoClickers();
-        int delay = 1000 / Math.max(autoClickers, 1);
+        int delay = 1000 / Math.min(Math.max(autoClickers, 1), 50);
 
         autoClickerRunnable = new Runnable() {
             @Override
             public void run() {
                 int autoClickers = autoClickerModel.getNumAutoClickers();
-                int delay = 1000 / Math.max(autoClickers, 1);
+                int delay = 1000 / Math.min(Math.max(autoClickers, 1), 50); // Doesn't run more than 50 times a second
 
-                if (autoClickers > 0) {
+                if (autoClickers > 0 && autoClickers <= 50) {
                     gainBitcoin();
 
                     long attackAmount = hackerModel.getTotalAttackAmount();
+                    bitcoinStorageModel.retrieveAmount(attackAmount);
+                } else if (autoClickers > 50){ // Compensates for not running more than 50 times a second
+                    gainBitcoin(autoClickers / 50);
+
+                    long attackAmount = hackerModel.getTotalAttackAmount() * (autoClickers / 50);
                     bitcoinStorageModel.retrieveAmount(attackAmount);
                 }
                 handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
@@ -216,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         gainBitcoin();
     }
 
-    private void gainBitcoin(int times) {
+    private void gainBitcoin(double times) {
         long bitcoin = getBitCoinPerTower(times);
         bitcoinStorageModel.storeAmount(bitcoin);
     }
@@ -225,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         gainBitcoin(1);
     }
 
-    private long getBitCoinPerTower(int times) {
+    private long getBitCoinPerTower(double times) {
         long bitcoin = 0;
         ArrayList<Tower> towers = towerModel.getTowers();
         for (Tower tower : towers) {
