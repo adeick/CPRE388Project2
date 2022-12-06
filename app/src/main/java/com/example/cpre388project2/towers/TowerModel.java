@@ -18,7 +18,7 @@ public class TowerModel extends ViewModel {
         return null;
     }
 
-    public void AddTower(TowerTypes towerType) {
+    public void addTower(TowerTypes towerType) {
         ArrayList<Tower> towers = getTowers();
         for (Tower tower : towers) {
             if (tower.getTowerType() == towerType) {
@@ -42,6 +42,10 @@ public class TowerModel extends ViewModel {
         if (towers == null) {
             towers = new MutableLiveData<>(new ArrayList<>());
         }
-        towers.getValue().set(i, tower);
+        if (towers.getValue().size() <= i) {
+            towers.getValue().add(tower);
+        } else {
+            towers.getValue().set(i, tower);
+        }
     }
 }

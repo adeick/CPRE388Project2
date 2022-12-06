@@ -7,17 +7,26 @@ public class Tower {
     private int towerCount;
 
     public Tower(TowerTypes _towerType) {
+        this(_towerType, 1, 1);
+    }
+
+    public Tower(TowerTypes _towerType, int _towerLevel, int _towerCount) {
         towerType = _towerType;
-        towerLevel = 1;
-        towerCount = 1;
+        towerLevel = _towerLevel;
+        towerCount = _towerCount;
     }
 
     /**
      * Retrieve the type that this tower belongs to.
+     *
      * @return The Tower Type.
      */
     public TowerTypes getTowerType() {
         return towerType;
+    }
+
+    public int getTowerCount() {
+        return towerCount;
     }
 
     /**

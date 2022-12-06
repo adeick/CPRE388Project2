@@ -49,7 +49,7 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName.setText("Software Engineers");
 
         TextView participant = findViewById(R.id.allianceMember1);
-        participant.setText(FirebaseUtil.getAuth().getCurrentUser().getDisplayName());;
+        participant.setText(FirebaseUtil.getAuth().getCurrentUser().getDisplayName());
 //        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
 //
 //        mFirestore.collection("se").add({

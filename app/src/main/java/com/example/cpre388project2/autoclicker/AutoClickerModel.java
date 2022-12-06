@@ -21,4 +21,12 @@ public class AutoClickerModel extends ViewModel {
         }
         numAutoClickers.setValue(numAutoClickers.getValue() + 1);
     }
+
+    public void setNumAutoClickers(int num) {
+        if (numAutoClickers == null) {
+            numAutoClickers = new MutableLiveData<>(num);
+        } else {
+            numAutoClickers.setValue(num);
+        }
+    }
 }

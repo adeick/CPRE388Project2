@@ -30,7 +30,6 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -82,24 +81,23 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler(Looper.getMainLooper());
 
 
-        Button butt = (Button)findViewById(R.id.toBuyScreen);
+        Button butt = (Button) findViewById(R.id.toBuyScreen);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, BuyScreen.class));
-                }
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BuyScreen.class));
+            }
         });
 
         allianceButton = findViewById(R.id.allianceButton);
         allianceButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 goToAlliances();
             }
         });
 
     }
-
 
 
     private void startAutoClickers() {
@@ -175,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         int cost = Tower.getPurchaseCost(towerType);
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
-            towerModel.AddTower(towerType);
+            towerModel.addTower(towerType);
         }
     }
 
@@ -218,18 +216,26 @@ public class MainActivity extends AppCompatActivity {
         gainBitcoin();
     }
 
-    private void gainBitcoin() {
-        int bitcoin = getBitCoinPerTower();
+    private void gainBitcoin(int times) {
+        int bitcoin = getBitCoinPerTower(times);
         bitcoinStorageModel.storeAmount(bitcoin);
     }
 
-    private int getBitCoinPerTower() {
+    private void gainBitcoin() {
+        gainBitcoin(1);
+    }
+
+    private int getBitCoinPerTower(int times) {
         int bitcoin = 0;
         ArrayList<Tower> towers = towerModel.getTowers();
         for (Tower tower : towers) {
-            bitcoin += tower.getProductionRate();
+            bitcoin += tower.getProductionRate() * times;
         }
         return bitcoin;
+    }
+
+    private int getBitCoinPerTower() {
+        return getBitCoinPerTower(1);
     }
 
     public void setupUser(String userId) {
@@ -244,7 +250,19 @@ public class MainActivity extends AppCompatActivity {
                                 DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
                                 userDocRef = userInfo.getReference();
                                 // Set up user from existing data
-                                bitcoinStorageModel.initialize(1, (Integer) userInfo.getDouble("bitcoins").intValue());
+                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), (Integer) userInfo.getDouble("bitcoins").intValue());
+
+                                ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
+                                for (int i = 0; i < tMaps.size(); i++) {
+                                    towerModel.setTower(i, new Tower(TowerTypes.valueOf((String) tMaps.get(i).get("towerType")),
+                                            ((Long) tMaps.get(i).get("towerLevel")).intValue(),
+                                            ((Long) tMaps.get(i).get("towerCount")).intValue()));
+                                }
+
+                                autoClickerModel.setNumAutoClickers((int) userInfo.getDouble("autoclickers").intValue());
+                                gainBitcoin((int) (new Timestamp(new Date()).getSeconds() - userInfo.getTimestamp("lastlogin").getSeconds())
+                                        * autoClickerModel.getNumAutoClickers());
+
                                 finishSetup(owner);
                                 return;
                             }
@@ -258,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void finishSetup(LifecycleOwner owner) {
-        towerModel.AddTower(TowerTypes.MAINFRAME);
+        towerModel.addTower(TowerTypes.MAINFRAME);
         bitcoinStorageModel.getAmountStored().observe(owner, amount -> {
             bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
         });
@@ -292,7 +310,10 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
         data.put("bitcoins", bitcoinStorageModel.getAmountStored().getValue());
+        data.put("storagelevel", bitcoinStorageModel.getStorageLevel());
         data.put("lastlogin", new Timestamp(new Date()));
+        data.put("towers", towerModel.getTowers());
+        data.put("autoclickers", autoClickerModel.getNumAutoClickers());
 
         userDocRef.update(data);
     }
@@ -302,8 +323,11 @@ public class MainActivity extends AppCompatActivity {
         data.put("userid", userId);
         data.put("username", "");
         data.put("bitcoins", 0);
+        data.put("storagelevel", 1);
         data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));
+        data.put("towers", towerModel.getTowers());
+        data.put("autoclickers", 0);
 
         mFirestore.collection("users").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
