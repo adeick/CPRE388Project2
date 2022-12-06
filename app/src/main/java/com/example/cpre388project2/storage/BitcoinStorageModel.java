@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel;
 
 public class BitcoinStorageModel extends ViewModel {
     private MutableLiveData<Integer> storageLevel;
-    private MutableLiveData<Integer> currentAmountStored;
+    private MutableLiveData<Long> currentAmountStored;
 
     public void initialize() {
         initialize(1, 0);
     }
 
-    public void initialize(int level, int amount) {
+    public void initialize(int level, long amount) {
         if (storageLevel == null) {
             storageLevel = new MutableLiveData<>(level);
         }
@@ -52,7 +52,7 @@ public class BitcoinStorageModel extends ViewModel {
      * @param amount The amount of bitcoin to be stored.
      * @return How much bitcoin was actually stored.
      */
-    public int storeAmount(int amount) {
+    public long storeAmount(long amount) {
         if (currentAmountStored.getValue() < storageCapacity()) {
             amount = Math.max(1, amount);
             if (amount + currentAmountStored.getValue() > storageCapacity()) {
@@ -75,12 +75,12 @@ public class BitcoinStorageModel extends ViewModel {
      * @param amount The amount to be retrieved from storage
      * @return How much was actually retrieved from storage.
      */
-    public int retrieveAmount(int amount) {
+    public long retrieveAmount(long amount) {
         if (currentAmountStored.getValue() > 0) {
             amount = Math.max(0, amount);
             if (amount > currentAmountStored.getValue()) {
                 amount = currentAmountStored.getValue();
-                currentAmountStored.setValue(0);
+                currentAmountStored.setValue(0L);
             } else {
                 currentAmountStored.setValue(currentAmountStored.getValue() - amount);
             }
@@ -95,15 +95,15 @@ public class BitcoinStorageModel extends ViewModel {
      *
      * @return The amount of bitcoin stored.
      */
-    public MutableLiveData<Integer> getAmountStored() {
+    public MutableLiveData<Long> getAmountStored() {
         return currentAmountStored;
     }
 
-    public int getUpgradeCost() {
-        return (int) (Math.pow(2, storageLevel.getValue() * 2) * 100);
+    public long getUpgradeCost() {
+        return (long) (Math.pow(2, storageLevel.getValue() * 2) * 100);
     }
 
-    private int storageCapacity() {
-        return (int) (Math.pow(2, storageLevel.getValue() * 3) * 100);
+    private long storageCapacity() {
+        return (long) (Math.pow(2, storageLevel.getValue() * 3) * 100);
     }
 }

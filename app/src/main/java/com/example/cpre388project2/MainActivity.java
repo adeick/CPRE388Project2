@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 if (autoClickers > 0) {
                     gainBitcoin();
 
-                    int attackAmount = hackerModel.getTotalAttackAmount();
+                    long attackAmount = hackerModel.getTotalAttackAmount();
                     bitcoinStorageModel.retrieveAmount(attackAmount);
                 }
                 handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buyAutoClickerOnClick(View view) {
-        int cost = 20;
+        long cost = 20;
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
             autoClickerModel.incrementNumAutoClickers();
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buyTower(TowerTypes towerType) {
-        int cost = Tower.getPurchaseCost(towerType);
+        long cost = Tower.getPurchaseCost(towerType);
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
             towerModel.addTower(towerType);
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
     private void upgradeTower(TowerTypes towerType) {
         Tower tower = towerModel.getTower(towerType);
         if (tower != null) {
-            int cost = tower.getUpgradeCost();
+            long cost = tower.getUpgradeCost();
             if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
                 bitcoinStorageModel.retrieveAmount(cost);
                 tower.upgradeTower();
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upgradeStorageOnClick(View view) {
-        int cost = bitcoinStorageModel.getUpgradeCost();
+        long cost = bitcoinStorageModel.getUpgradeCost();
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
             bitcoinStorageModel.upgradeStorage();
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gainBitcoin(int times) {
-        int bitcoin = getBitCoinPerTower(times);
+        long bitcoin = getBitCoinPerTower(times);
         bitcoinStorageModel.storeAmount(bitcoin);
     }
 
@@ -225,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
         gainBitcoin(1);
     }
 
-    private int getBitCoinPerTower(int times) {
-        int bitcoin = 0;
+    private long getBitCoinPerTower(int times) {
+        long bitcoin = 0;
         ArrayList<Tower> towers = towerModel.getTowers();
         for (Tower tower : towers) {
             bitcoin += tower.getProductionRate() * times;
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         return bitcoin;
     }
 
-    private int getBitCoinPerTower() {
+    private long getBitCoinPerTower() {
         return getBitCoinPerTower(1);
     }
 
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                                 DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
                                 userDocRef = userInfo.getReference();
                                 // Set up user from existing data
-                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), (Integer) userInfo.getDouble("bitcoins").intValue());
+                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"));
 
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
