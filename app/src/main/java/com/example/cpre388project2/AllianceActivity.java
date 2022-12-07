@@ -15,6 +15,7 @@ import com.example.cpre388project2.util.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class AllianceActivity extends AppCompatActivity {
@@ -31,10 +33,14 @@ public class AllianceActivity extends AppCompatActivity {
 
     private TextView allianceName;
 
+    private String allianceSelectedCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alliance_search);
+
+        allianceSelectedCode = "";
 
         mFirestore = FirebaseUtil.getFirestore();
 
@@ -85,7 +91,7 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Software Engineers");
 
-        getUserList("se");
+        getUserList(allianceSelectedCode = "se");
 //        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
 //
 //        mFirestore.collection("se").add({
@@ -102,7 +108,7 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Computer Engineers");
 
-        getUserList("cpre");
+        getUserList(allianceSelectedCode = "cpre");
 //        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
 //
 //        mFirestore.collection("se").add({
@@ -115,7 +121,7 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Electrical Engineers");
 
-        getUserList("ee");
+        getUserList(allianceSelectedCode = "ee");
 //        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
 //
 //        mFirestore.collection("se").add({
@@ -128,11 +134,34 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("CS Majors (lol)");
 
-        getUserList("cs");
+        getUserList(allianceSelectedCode = "cs");
 //        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
 //
 //        mFirestore.collection("se").add({
 //
 //        });
+    }
+
+    public void onJoinClick(View view) {
+        String userId = FirebaseUtil.getAuth().getUid();
+        mFirestore.collection("users")
+                .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) { // User data exists
+                                DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
+                                DocumentReference userDocRef = userInfo.getReference();
+
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("alliance", allianceSelectedCode);
+
+                                userDocRef.update(data);
+                                getUserList(allianceSelectedCode);
+                                return;
+                            }
+                        }
+                    }
+                });
     }
 }
