@@ -35,9 +35,13 @@ public class BuyScreen extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.buyRecycler);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BuyAdapter(dataset);
-        recyclerView.setAdapter(adapter);
+        adapter = new BuyAdapter(dataset, new BuyListener() {
+            @Override public void onPositionClicked(int pos) {
+                System.out.println("FFF: " + pos);
+            }
+        });
 
+        recyclerView.setAdapter(adapter);
         Button butt = (Button)findViewById(R.id.button2);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
