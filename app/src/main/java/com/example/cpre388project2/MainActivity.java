@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.cpre388project2.hacker.Hacker;
 import com.example.cpre388project2.hacker.HackerModel;
+import com.example.cpre388project2.prestige.PrestigeModel;
 import com.example.cpre388project2.storage.BitcoinStorageModel;
 import com.example.cpre388project2.autoclicker.AutoClickerModel;
 import com.example.cpre388project2.towers.Tower;
@@ -40,21 +41,26 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    // View Models
     private BitcoinStorageModel bitcoinStorageModel;
     private TowerModel towerModel;
     private AutoClickerModel autoClickerModel;
     private HackerModel hackerModel;
+    private PrestigeModel prestigeModel;
     private MainActivityViewModel mViewModel;
 
+    // Misc.
     private FirebaseFirestore mFirestore;
     private DocumentReference userDocRef;
 
     private static final int RC_SIGN_IN = 9001;
 
+    // Runnables
     private Handler handler;
     private Runnable autoClickerRunnable;
     private Runnable hackerSpawnerRunnable;
 
+    // Views
     private TextView bitcoinCountTextView;
     private Button allianceButton;
 
@@ -62,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView prestigeLevelTextView = (TextView) findViewById(R.id.prestigeLevelTextView);
 
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -71,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
         towerModel = new ViewModelProvider(this).get(TowerModel.class);
         autoClickerModel = new ViewModelProvider(this).get(AutoClickerModel.class);
         hackerModel = new ViewModelProvider(this).get(HackerModel.class);
+        prestigeModel = new ViewModelProvider(this).get(PrestigeModel.class);
+
+        prestigeModel.getPrestigeLevel().observe(this, level -> {
+            prestigeLevelTextView.setText(getString(R.string.prestigeLevelText, level));
+        });
 
 //        bitcoinStorageModel.initialize();
 //        setupUser(FirebaseUtil.getAuth().getUid());
@@ -155,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);
             autoClickerModel.incrementNumAutoClickers();
+        }
+    }
+
+    public void prestigeOnClick(View view) {
+        if (prestigeModel.canAffordNextPrestige(bitcoinStorageModel.getAmountStored().getValue())) {
+            bitcoinStorageModel.retrieveAmount(prestigeModel.nextPrestigeCost());
+            prestigeModel.upgradeToNextPrestige();
         }
     }
 
@@ -268,6 +288,8 @@ public class MainActivity extends AppCompatActivity {
                                 gainBitcoin((int) (new Timestamp(new Date()).getSeconds() - userInfo.getTimestamp("lastlogin").getSeconds())
                                         * autoClickerModel.getNumAutoClickers());
 
+                                prestigeModel.setPrestigeLevel(userInfo.getDouble("prestigelevel").intValue());
+
                                 finishSetup(owner);
                                 return;
                             }
@@ -319,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", autoClickerModel.getNumAutoClickers());
+        data.put("prestigelevel", prestigeModel.getPrestigeLevel().getValue());
 
         userDocRef.update(data);
     }
@@ -333,6 +356,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", 0);
+        data.put("prestigelevel", 1);
 
         mFirestore.collection("users").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
