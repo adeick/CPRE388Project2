@@ -20,7 +20,7 @@
         android:text="@string/element_text" />
 
     <Button
-        android:id="@+id/buttonUp"
+        android:id="@+id/upgradeButton"
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:gravity="center"
@@ -29,7 +29,7 @@
         android:layout_alignParentLeft="true" />
 
     <Button
-        android:id="@+id/buttonCust"
+        android:id="@+id/customizeButton"
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
@@ -38,7 +38,7 @@
         android:text="Customize!" />
 
     <Button
-        android:id="@+id/buttonBuy"
+        android:id="@+id/buyButton"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"

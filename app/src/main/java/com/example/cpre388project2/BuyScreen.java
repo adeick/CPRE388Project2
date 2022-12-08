@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.cpre388project2.towers.TowerTypes;
+
 public class BuyScreen extends AppCompatActivity {
 
 //    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -36,8 +38,15 @@ public class BuyScreen extends AppCompatActivity {
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BuyAdapter(dataset, new BuyListener() {
-            @Override public void onPositionClicked(int pos) {
-                System.out.println("FFF: " + pos);
+            @Override public void onPositionClicked(int pos, String name) {
+                if(name.equals("upgradeButton")){
+                    upgrade(pos);
+                }else if(name.equals("buyButton")){
+                    buy(pos);
+                }else if(name.equals("customizeButton")){
+                    customize(pos);
+                }
+
             }
         });
 
@@ -62,5 +71,27 @@ public class BuyScreen extends AppCompatActivity {
     private void initDataset(){
         dataset = new String[]{"Server", "Microprocessor", "GPU", "QuantumComputer"};
     }
+
+    private void upgrade(int pos){
+//        switch(pos) {
+//            case 0:
+//                server;
+//                break;
+//            case 1:
+//                microprocessor;
+//                break;
+//            case 2:
+//                GPU;
+//                break;
+//            case 3:
+//                quantumComputer;
+//                break;
+//        }
+    }
+
+    private void buy(int pos){}
+
+    private void customize(int pos){}
+
 
 }

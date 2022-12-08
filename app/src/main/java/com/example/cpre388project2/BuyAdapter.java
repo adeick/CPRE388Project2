@@ -36,14 +36,16 @@ public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.ViewHolder> {
             super(view);
             listenerRef = new WeakReference<>(listener);
             textView = (TextView) view.findViewById(R.id.textView);
-            upgrade = (Button)view.findViewById(R.id.buttonUp);
-            customize = (Button)view.findViewById(R.id.buttonCust);
-            buy = (Button) view.findViewById(R.id.buttonBuy);
+            upgrade = (Button)view.findViewById(R.id.upgradeButton);
+            upgrade.setOnClickListener(this);
+            customize = (Button)view.findViewById(R.id.customizeButton);
+            customize.setOnClickListener(this);
+            buy = (Button) view.findViewById(R.id.buyButton);
             buy.setOnClickListener(this);
         }
         @Override
         public void onClick(View v){
-            listenerRef.get().onPositionClicked(getAdapterPosition());
+            listenerRef.get().onPositionClicked(getAdapterPosition(), v.getResources().getResourceEntryName(v.getId()));
         }
 
 
