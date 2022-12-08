@@ -74,7 +74,7 @@ public class AllianceActivity extends AppCompatActivity {
                             if (task.getResult().size() > 0) { // Members in alliance
                                 String text = "";
                                 for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
-                                    text += userInfo.get("username") + " - " + userInfo.getLong("bitcoins") + "\n";
+                                    text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
                                 }
 
                                 participant.setText(text);

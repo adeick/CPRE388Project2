@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/allianceName"
-        android:layout_width="319dp"
+        android:layout_width="340dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
         android:text="name"
@@ -53,11 +53,11 @@
 
     <TextView
         android:id="@+id/allianceMember1"
-        android:layout_width="210dp"
+        android:layout_width="350dp"
         android:layout_height="350dp"
         android:layout_marginTop="24dp"
         android:text="GenericMember"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
