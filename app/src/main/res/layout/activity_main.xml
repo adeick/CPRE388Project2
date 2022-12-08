@@ -42,6 +42,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/mainframe" />
 
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/firewallHealthBar"-->
+    <!--        style="@android:style/Widget.ProgressBar.Horizontal"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginStart="90dp"-->
+    <!--        android:layout_marginTop="90dp"-->
+    <!--        android:layout_marginEnd="90dp"-->
+    <!--        android:max="100"-->
+    <!--        android:progress="25"-->
+    <!--        android:progressDrawable="@drawable/circular"-->
+    <!--        app:layout_constraintDimensionRatio="H,1:1"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:progress="75"
+        android:rotation="45"
+        app:indicatorColor="@color/fireColor"
+        app:indicatorSize="180dp"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:trackColor="@color/white"
+        app:trackCornerRadius="8dp"
+        app:trackThickness="8dp" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="409dp"
@@ -51,6 +84,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView">
+
+        <TextView
+            android:id="@+id/firewallInfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/firewallInfoText"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/buyAutoClickerButton"
@@ -67,25 +107,18 @@
             android:text="Upgrade Storage" />
 
         <Button
+            android:id="@+id/firewallButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="firewallOnClick"
+            android:text="Upgrade Firewall" />
+
+        <Button
             android:id="@+id/buyServerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="towerServerOnClick"
             android:text="Buy Server" />
-
-        <Button
-            android:id="@+id/buyMicroprocessorButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="towerMicroProcessorOnClick"
-            android:text="Buy Microprocessor" />
-
-        <Button
-            android:id="@+id/buyGPUButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="towerGPUOnClick"
-            android:text="Buy GPU" />
 
         <Button
             android:id="@+id/buyQuantumButton"

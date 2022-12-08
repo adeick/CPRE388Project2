@@ -3,6 +3,7 @@ package com.example.cpre388project2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.cpre388project2.firewall.FirewallModel;
 import com.example.cpre388project2.hacker.Hacker;
 import com.example.cpre388project2.hacker.HackerModel;
 import com.example.cpre388project2.prestige.PrestigeModel;
@@ -27,6 +30,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private AutoClickerModel autoClickerModel;
     private HackerModel hackerModel;
     private PrestigeModel prestigeModel;
+    private FirewallModel firewallModel;
     private MainActivityViewModel mViewModel;
 
     // Misc.
@@ -70,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView prestigeLevelTextView = (TextView) findViewById(R.id.prestigeLevelTextView);
+        TextView firewallInfoTextView = (TextView) findViewById(R.id.firewallInfoTextView);
+        CircularProgressIndicator firewallHealthBar = (CircularProgressIndicator) findViewById(R.id.progress);
+//        ProgressBar firewallBar = (ProgressBar) findViewById(R.id.firewallHealthBar);
 
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -80,9 +88,30 @@ public class MainActivity extends AppCompatActivity {
         autoClickerModel = new ViewModelProvider(this).get(AutoClickerModel.class);
         hackerModel = new ViewModelProvider(this).get(HackerModel.class);
         prestigeModel = new ViewModelProvider(this).get(PrestigeModel.class);
+        firewallModel = new ViewModelProvider(this).get(FirewallModel.class);
 
         prestigeModel.getPrestigeLevel().observe(this, level -> {
             prestigeLevelTextView.setText(getString(R.string.prestigeLevelText, level));
+        });
+        firewallModel.getFirewallLevel().observe(this, level -> {
+            if (level > 0) {
+                int health = firewallModel.getCurrentHealth().getValue();
+                int maxHealth = firewallModel.getMaxHealth();
+                firewallInfoTextView.setText(getString(R.string.firewallInfoText, level, health, maxHealth));
+                firewallInfoTextView.setVisibility(View.VISIBLE);
+                // TODO: set textview to visible and display firewall level, image, and health
+            } else {
+                firewallInfoTextView.setVisibility(View.GONE);
+            }
+        });
+        firewallModel.getCurrentHealth().observe(this, health -> {
+            int level = firewallModel.getFirewallLevel().getValue();
+            int maxHealth = firewallModel.getMaxHealth();
+            int healthRatio = (int) ((float) health / maxHealth * 100);
+            firewallInfoTextView.setText(getString(R.string.firewallInfoText, level, health, maxHealth));
+            System.out.println(healthRatio);
+            firewallHealthBar.setProgress(healthRatio);
+//            firewallBar.setProgress(healthRatio);
         });
 
 //        bitcoinStorageModel.initialize();
@@ -127,17 +156,28 @@ public class MainActivity extends AppCompatActivity {
                     gainBitcoin();
 
                     long attackAmount = hackerModel.getTotalAttackAmount();
-                    bitcoinStorageModel.retrieveAmount(attackAmount);
+                    hackAttack(attackAmount);
                 } else if (autoClickers > 50) { // Compensates for not running more than 50 times a second
                     gainBitcoin(autoClickers / 50);
 
                     long attackAmount = hackerModel.getTotalAttackAmount() * (autoClickers / 50);
-                    bitcoinStorageModel.retrieveAmount(attackAmount);
+                    hackAttack(attackAmount);
                 }
                 handler.postAtTime(this, SystemClock.uptimeMillis() + delay);
             }
         };
         handler.postAtTime(autoClickerRunnable, SystemClock.uptimeMillis() + delay);
+    }
+
+    private void hackAttack(long attackAmount) {
+        if (firewallModel.getCurrentHealth().getValue() == 0) {
+            bitcoinStorageModel.retrieveAmount(attackAmount);
+        } else {
+            if (attackAmount > 0) {
+                int wallDamage = firewallModel.getFirewallLevel().getValue();
+                firewallModel.damage(wallDamage);
+            }
+        }
     }
 
     private void goToAlliances() {
@@ -161,6 +201,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postAtTime(hackerSpawnerRunnable, SystemClock.uptimeMillis() + initialDelay);
+    }
+
+    public void firewallOnClick(View view) {
+        long cost = firewallModel.firewallUpgradeCost();
+        if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
+            bitcoinStorageModel.retrieveAmount(cost);
+            firewallModel.upgradeFirewall();
+        }
     }
 
     public void buyAutoClickerOnClick(View view) {
@@ -289,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
                                         * autoClickerModel.getNumAutoClickers());
 
                                 prestigeModel.setPrestigeLevel(userInfo.getDouble("prestigelevel").intValue());
+                                firewallModel.upgradeFirewall(userInfo.getDouble("firewalllevel").intValue());
 
                                 finishSetup(owner);
                                 return;
@@ -345,6 +394,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", autoClickerModel.getNumAutoClickers());
         data.put("prestigelevel", prestigeModel.getPrestigeLevel().getValue());
+        data.put("firewalllevel", firewallModel.getFirewallLevel().getValue());
 
         userDocRef.update(data);
     }
@@ -363,6 +413,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", 0);
         data.put("prestigelevel", 1);
+        data.put("firewalllevel", 0);
 
         mFirestore.collection("users").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
