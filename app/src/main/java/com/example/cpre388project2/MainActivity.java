@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
                     long attackAmount = hackerModel.getTotalAttackAmount();
                     bitcoinStorageModel.retrieveAmount(attackAmount);
-                } else if (autoClickers > 50){ // Compensates for not running more than 50 times a second
+                } else if (autoClickers > 50) { // Compensates for not running more than 50 times a second
                     gainBitcoin(autoClickers / 50);
 
                     long attackAmount = hackerModel.getTotalAttackAmount() * (autoClickers / 50);
@@ -294,6 +294,9 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                         }
+                        if (userId == null) { // Stop accounts with null userId from being created
+                            return;
+                        }
                         createUser(userId);
                         // User data doesn't exist
                         bitcoinStorageModel.initialize();
@@ -347,6 +350,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createUser(String userId) {
+        if (userId == null) {
+            return;
+        }
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
         data.put("username", "");
