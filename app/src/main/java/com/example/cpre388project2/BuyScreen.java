@@ -73,6 +73,9 @@ public class BuyScreen extends AppCompatActivity {
     }
 
     private void upgrade(int pos){
+        MainActivity.getInstance().buyAutoClickerOnClick(null); // Example how to buy/upgrade stuff from main activity methods
+        MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+
 //        switch(pos) {
 //            case 0:
 //                server;

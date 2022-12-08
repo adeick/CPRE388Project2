@@ -3,14 +3,27 @@ package com.example.cpre388project2.prestige;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * ViewModel to handle player's prestige.
+ */
 public class PrestigeModel extends ViewModel {
     private MutableLiveData<Integer> prestigeLevel;
 
+    /**
+     * Get the current prestige level.
+     *
+     * @return MutableLiveData of prestigeLevel.
+     */
     public MutableLiveData<Integer> getPrestigeLevel() {
         checkNull();
         return prestigeLevel;
     }
 
+    /**
+     * Sets the current prestige level.
+     *
+     * @param level New prestige level.
+     */
     public void setPrestigeLevel(int level) {
         checkNull();
         prestigeLevel.setValue(level);

@@ -25,7 +25,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Activity that handles viewing alliances, seeing alliances' members, and joining alliances.
+ */
 public class AllianceActivity extends AppCompatActivity {
 
     private Button mainButton;
@@ -35,6 +37,11 @@ public class AllianceActivity extends AppCompatActivity {
 
     private String allianceSelectedCode;
 
+    /**
+     * Lifecycle hook to initialize activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +52,6 @@ public class AllianceActivity extends AppCompatActivity {
         mFirestore = FirebaseUtil.getFirestore();
 
         mainButton = findViewById(R.id.mainButton);
-//        mainButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view){
-//                goToMain();
-//            }
-//        });
     }
 
     private void goToMain() {
@@ -58,6 +59,11 @@ public class AllianceActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
+    /**
+     * onClick method to return to main activity screen.
+     *
+     * @param view
+     */
     public void onMainButtonClick(View view) {
         goToMain();
     }
@@ -86,62 +92,67 @@ public class AllianceActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * onClick method to display "Software Engineers" alliance
+     *
+     * @param view
+     */
     public void onSoftwareEngineerClick(View view) {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Software Engineers");
 
         getUserList(allianceSelectedCode = "se");
-//        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
-//
-//        mFirestore.collection("se").add({
-//
-//        });
     }
 
     public void onBackButtonClicked(View view) {
         setContentView(R.layout.alliance_search);
     }
 
+    /**
+     * onClick method to display "Computer Engineers" alliance
+     *
+     * @param view
+     */
     public void onComputerEngineerClick(View view) {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Computer Engineers");
 
         getUserList(allianceSelectedCode = "cpre");
-//        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
-//
-//        mFirestore.collection("se").add({
-//
-//        });
     }
 
+    /**
+     * onClick method to display "Electrical Engineers" alliance
+     *
+     * @param view
+     */
     public void onElectricalEngineerClick(View view) {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Electrical Engineers");
 
         getUserList(allianceSelectedCode = "ee");
-//        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
-//
-//        mFirestore.collection("se").add({
-//
-//        });
     }
 
+    /**
+     * onClick method to display "CS Majors" alliance
+     *
+     * @param view
+     */
     public void onCSClick(View view) {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("CS Majors (lol)");
 
         getUserList(allianceSelectedCode = "cs");
-//        FireBaseUser thisUser = FirebaseUtil.getAuth().getCurrentUser().getUid();
-//
-//        mFirestore.collection("se").add({
-//
-//        });
     }
 
+    /**
+     * onClick method to join the currently selected/displayed alliance.
+     *
+     * @param view
+     */
     public void onJoinClick(View view) {
         String userId = FirebaseUtil.getAuth().getUid();
         mFirestore.collection("users")
