@@ -1,15 +1,30 @@
 package com.example.cpre388project2.towers;
 
+/**
+ * Individual Tower that produces bitcoins.
+ */
 public class Tower {
 
     private TowerTypes towerType;
     private int towerLevel;
     private int towerCount;
 
+    /**
+     * Constructs a Tower.
+     *
+     * @param _towerType TowerType enum for type of tower.
+     */
     public Tower(TowerTypes _towerType) {
         this(_towerType, 1, 1);
     }
 
+    /**
+     * Constructs a Tower.
+     *
+     * @param _towerType  TowerType enum for type of tower.
+     * @param _towerLevel Level of tower.
+     * @param _towerCount Number of towers.
+     */
     public Tower(TowerTypes _towerType, int _towerLevel, int _towerCount) {
         towerType = _towerType;
         towerLevel = _towerLevel;
@@ -25,6 +40,11 @@ public class Tower {
         return towerType;
     }
 
+    /**
+     * Returns number of towers.
+     *
+     * @return Number of towers.
+     */
     public int getTowerCount() {
         return towerCount;
     }
@@ -39,6 +59,11 @@ public class Tower {
         return towerLevel * towerTypeProductionRate() * towerCount;
     }
 
+    /**
+     * Calculates upgrade cost.
+     *
+     * @return Cost in bitcoins.
+     */
     public long getUpgradeCost() {
         return (long) Math.pow(2, towerLevel);
     }
@@ -84,6 +109,12 @@ public class Tower {
         towerCount += count;
     }
 
+    /**
+     * Calculates cost to buy another tower of given type.
+     *
+     * @param towerType TowerType enum.
+     * @return Cost in bitcoins.
+     */
     public static long getPurchaseCost(TowerTypes towerType) {
         switch (towerType) {
             case SERVER:

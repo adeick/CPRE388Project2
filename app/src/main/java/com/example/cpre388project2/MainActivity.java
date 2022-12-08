@@ -69,10 +69,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView bitcoinCountTextView;
     private Button allianceButton;
 
+    private static MainActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        instance = this;
 
         TextView prestigeLevelTextView = (TextView) findViewById(R.id.prestigeLevelTextView);
         TextView firewallInfoTextView = (TextView) findViewById(R.id.firewallInfoTextView);
@@ -141,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
+    public String getUserId(){
+        return FirebaseUtil.getAuth().getUid();
+    }
 
     private void startAutoClickers() {
         int autoClickers = autoClickerModel.getNumAutoClickers();

@@ -5,9 +5,18 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * ViewModel that manages Towers.
+ */
 public class TowerModel extends ViewModel {
     private MutableLiveData<ArrayList<Tower>> towers;
 
+    /**
+     * Gets Tower object of specified type.
+     *
+     * @param towerType TowerType enum.
+     * @return Tower object.
+     */
     public Tower getTower(TowerTypes towerType) {
         ArrayList<Tower> towers = getTowers();
         for (Tower tower : towers) {
@@ -18,6 +27,11 @@ public class TowerModel extends ViewModel {
         return null;
     }
 
+    /**
+     * Adds a Tower of specified type.
+     *
+     * @param towerType TowerType enum.
+     */
     public void addTower(TowerTypes towerType) {
         ArrayList<Tower> towers = getTowers();
         for (Tower tower : towers) {
@@ -31,6 +45,11 @@ public class TowerModel extends ViewModel {
         towers.add(new Tower(towerType));
     }
 
+    /**
+     * Gets ArrayList of all Towers.
+     *
+     * @return ArrayList of Towers.
+     */
     public ArrayList<Tower> getTowers() {
         if (towers == null) {
             towers = new MutableLiveData<>(new ArrayList<>());
@@ -38,6 +57,12 @@ public class TowerModel extends ViewModel {
         return towers.getValue();
     }
 
+    /**
+     * Sets the element at position i of Towers ArrayList to be passed in Tower.
+     *
+     * @param i     Position of element to be set.
+     * @param tower Tower object to be set as.
+     */
     public void setTower(int i, Tower tower) {
         if (towers == null) {
             towers = new MutableLiveData<>(new ArrayList<>());

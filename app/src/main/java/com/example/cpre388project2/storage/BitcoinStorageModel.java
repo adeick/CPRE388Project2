@@ -3,14 +3,26 @@ package com.example.cpre388project2.storage;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * ViewModel responsible for storing bitcoins.
+ */
 public class BitcoinStorageModel extends ViewModel {
     private MutableLiveData<Integer> storageLevel;
     private MutableLiveData<Long> currentAmountStored;
 
+    /**
+     * Initialize to default values.
+     */
     public void initialize() {
         initialize(1, 0);
     }
 
+    /**
+     * Initialize to specified values.
+     *
+     * @param level  Level of bitcoin storage.
+     * @param amount Amount of bitcoins in storage.
+     */
     public void initialize(int level, long amount) {
         if (storageLevel == null) {
             storageLevel = new MutableLiveData<>(level);
@@ -99,10 +111,20 @@ public class BitcoinStorageModel extends ViewModel {
         return currentAmountStored;
     }
 
+    /**
+     * Calculates the upgrade cost of storage based on level.
+     *
+     * @return Upgrade cost in bitcoins.
+     */
     public long getUpgradeCost() {
         return (long) (Math.pow(2, storageLevel.getValue() * 2) * 100);
     }
 
+    /**
+     * Calculates the storage capacity based on level.
+     *
+     * @return Number of bitcoins that can be stored.
+     */
     private long storageCapacity() {
         return (long) (Math.pow(2, storageLevel.getValue() * 3) * 100);
     }
