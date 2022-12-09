@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         buyTower(TowerTypes.QUANTUMCOMPUTER);
     }
 
-    private void buyTower(TowerTypes towerType) {
+    public void buyTower(TowerTypes towerType) {
         long cost = Tower.getPurchaseCost(towerType);
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
             bitcoinStorageModel.retrieveAmount(cost);

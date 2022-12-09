@@ -69,30 +69,63 @@ public class BuyScreen extends AppCompatActivity {
 
 
     private void initDataset(){
-        dataset = new String[]{"Server", "Microprocessor", "GPU", "QuantumComputer"};
+        dataset = new String[]{"Auto Clicker", "Storage", "Server", "Microprocessor", "GPU", "Quantum Computer", "Firewall"};
     }
 
     private void upgrade(int pos){
-        MainActivity.getInstance().buyAutoClickerOnClick(null); // Example how to buy/upgrade stuff from main activity methods
-        MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
 
-//        switch(pos) {
-//            case 0:
-//                server;
-//                break;
-//            case 1:
-//                microprocessor;
-//                break;
-//            case 2:
-//                GPU;
-//                break;
-//            case 3:
-//                quantumComputer;
-//                break;
-//        }
+        switch(pos) {
+            case 1:
+                MainActivity.getInstance().upgradeStorageOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 2:
+                MainActivity.getInstance().upgradeServerOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 3:
+                MainActivity.getInstance().upgradeMicroprocessorOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 4:
+                MainActivity.getInstance().upgradeGPUOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
+                break;
+            case 5:
+                MainActivity.getInstance().upgradeQuantumComputerOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
+                break;
+            default:
+                break;
+        }
     }
 
-    private void buy(int pos){}
+    private void buy(int pos){
+        switch(pos) {
+            case 0:
+                MainActivity.getInstance().buyAutoClickerOnClick(null); //buy a autoclicker
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 2:
+                MainActivity.getInstance().buyTower(TowerTypes.SERVER); // buy a server
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 3:
+                MainActivity.getInstance().buyTower(TowerTypes.MICROPROCESSOR);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
+            case 4:
+                MainActivity.getInstance().buyTower(TowerTypes.GPU);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
+                break;
+            case 5:
+                MainActivity.getInstance().buyTower(TowerTypes.QUANTUMCOMPUTER);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
+                break;
+            default:
+                break;
+        }
+    }
 
     private void customize(int pos){}
 
