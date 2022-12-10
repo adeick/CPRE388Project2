@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.cpre388project2.util.FirebaseUtil;
@@ -32,8 +35,7 @@ public class AllianceActivity extends AppCompatActivity {
     private TextView allianceName;
 
     private String allianceSelectedCode;
-    private String joinLeaveButtonText;
-
+    private TableLayout allianceTable;
     /**
      * Lifecycle hook to initialize activity.
      *
@@ -77,36 +79,52 @@ public class AllianceActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if (task.getResult().size() > 0) { // Members in alliance
                                 String text = "";
-                                for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
-                                    text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
+//                                allianceTable = findViewById(R.id.allianceTable);
+                                allianceTable.removeAllViewsInLayout();
+                                TableRow header = new TableRow(allianceTable.getContext());
+                                TextView tv0 = new TextView(allianceTable.getContext());
+                                tv0.setText(" Username ");
+                                tv0.setTextSize(19);
+
+                                header.addView(tv0);
+                                TextView tv1 = new TextView(allianceTable.getContext());
+                                tv1.setText("  Prestige  ");
+                                tv1.setTextSize(19);
+                                header.addView(tv1);
+                                TextView tv2 = new TextView(allianceTable.getContext());
+                                tv2.setText("  Bitcoins  ");
+                                tv2.setTextSize(19);
+                                header.addView(tv2);
+                                allianceTable.addView(header);
+                            for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
+                                TableRow dataRow = new TableRow(allianceTable.getContext());
+                                TextView username = new TextView(allianceTable.getContext());
+                                username.setText(userInfo.get("username").toString());
+                                dataRow.addView(username);
+                                TextView prestige = new TextView(allianceTable.getContext());
+                                prestige.setText(userInfo.getLong("prestigelevel").toString());
+                                dataRow.addView(prestige);
+                                TextView bitcoins = new TextView(allianceTable.getContext());
+                                bitcoins.setText(adjustBitcoinString(userInfo.getLong("bitcoins")));
+                                dataRow.addView(bitcoins);
+                                if(userInfo.get("userid") != null && userInfo.get("userid").equals(FirebaseUtil.getAuth().getCurrentUser().getUid())){
+                                    System.out.print("Set Cyan");
+                                    dataRow.setBackgroundColor(Color.CYAN);
+                                }
+                                allianceTable.addView(dataRow);
+//                                    text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
                                 }
 
                                 participantList.setText(text);
-//                                if(joinLeaveButtonText.equals("")){
-////                                    joinLeaveButton.setVisibility(View.INVISIBLE);
-//                                }
-//                                else{
-//                                    joinLeaveButton.setText(joinLeaveButtonText);
-////                                    joinLeaveButton.setVisibility(View.VISIBLE);
-//                                }
                                 return;
                             }
                         }
                         participantList.setText("No members");
-                        if(joinLeaveButtonText.equals("")){
-                            joinLeaveButton.setVisibility(View.INVISIBLE);
-                        }
-                        else{
-                            joinLeaveButton.setText(joinLeaveButtonText);
-                            joinLeaveButton.setVisibility(View.VISIBLE);
-                        }
                     }
                 });
     }
 
     public void getCurrentUserAllianceStatus(String alliance){
-
-        joinLeaveButton.setText("First");
         mFirestore.collection("users")
                 .whereEqualTo("userid", FirebaseUtil.getAuth().getCurrentUser().getUid())
                 .get()
@@ -115,8 +133,6 @@ public class AllianceActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
                             String firebaseAlliance = task.getResult().getDocuments().get(0).getString("alliance");
-                            System.out.println(">> " + firebaseAlliance);
-                            System.out.println(">> " + firebaseAlliance.equals("se"));
                             if(firebaseAlliance.equals("")){
                                 joinLeaveButton.setText("Join");
                                 joinLeaveButton.setVisibility(View.VISIBLE);
@@ -127,7 +143,6 @@ public class AllianceActivity extends AppCompatActivity {
 
                             }
                             else{
-                                joinLeaveButtonText="";
                                 joinLeaveButton.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -136,38 +151,57 @@ public class AllianceActivity extends AppCompatActivity {
                 });
     }
 
+    private String adjustBitcoinString(long bitcoinAmount){
+        if(bitcoinAmount / (1000000000) > 0){
+            double reduced = ((double) bitcoinAmount / 1000000000);
+            String str = String.format("%.1f billion", reduced);
+            return str;
+        }
+        if(bitcoinAmount / (1000000) > 0){
+            double reduced = ((double) bitcoinAmount / 1000000);
+            String str = String.format("%.1f million", reduced);
+            return str;
+        }
+        if(bitcoinAmount / (1000) > 0){
+            double reduced = ((double) bitcoinAmount / 1000);
+            String str = String.format("%.1f thousand", reduced);
+            return str;
+        }
+        return (Long.toString(bitcoinAmount));
+    }
+
+    private void onAllianceClick(){
+        setContentView(R.layout.alliance_join);
+        allianceName = findViewById(R.id.allianceName);
+
+        joinLeaveButton = findViewById(R.id.joinLeaveButton);
+        allianceTable = findViewById(R.id.allianceTable);
+        allianceTable.setColumnStretchable(0, true);
+
+        getUserList(allianceSelectedCode);
+        getCurrentUserAllianceStatus(allianceSelectedCode);
+    }
+
     /**
      * onClick method to display "Software Engineers" alliance
      *
      * @param view
      */
     public void onSoftwareEngineerClick(View view) {
-        setContentView(R.layout.alliance_join);
-        allianceName = findViewById(R.id.allianceName);
-        allianceName.setText("Software Engineers");
-        joinLeaveButton = findViewById(R.id.joinLeaveButton);
-
         allianceSelectedCode = "se";
-        getUserList(allianceSelectedCode);
-        getCurrentUserAllianceStatus(allianceSelectedCode);
+        onAllianceClick();
+        allianceName.setText("Software Engineers");
     }
 
-    public void onBackButtonClicked(View view) {
-        setContentView(R.layout.alliance_search);
-    }
-
-    /**
+     /**
      * onClick method to display "Computer Engineers" alliance
      *
      * @param view
      */
     public void onComputerEngineerClick(View view) {
-        setContentView(R.layout.alliance_join);
-        allianceName = findViewById(R.id.allianceName);
-        joinLeaveButton = findViewById(R.id.joinLeaveButton);
-
-        getUserList(allianceSelectedCode = "cpre");
-        getCurrentUserAllianceStatus(allianceSelectedCode);
+        allianceSelectedCode = "cpre";
+        onAllianceClick();
+        allianceName.setText("Computer Engineers");
     }
 
     /**
@@ -176,13 +210,9 @@ public class AllianceActivity extends AppCompatActivity {
      * @param view
      */
     public void onElectricalEngineerClick(View view) {
-        setContentView(R.layout.alliance_join);
-        allianceName = findViewById(R.id.allianceName);
+        allianceSelectedCode = "ee";
+        onAllianceClick();
         allianceName.setText("Electrical Engineers");
-        joinLeaveButton = findViewById(R.id.joinLeaveButton);
-
-        getUserList(allianceSelectedCode = "ee");
-        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     /**
@@ -191,13 +221,9 @@ public class AllianceActivity extends AppCompatActivity {
      * @param view
      */
     public void onCSClick(View view) {
-        setContentView(R.layout.alliance_join);
-        allianceName = findViewById(R.id.allianceName);
+        allianceSelectedCode = "cs";
+        onAllianceClick();
         allianceName.setText("CS Majors (lol)");
-        joinLeaveButton = findViewById(R.id.joinLeaveButton);
-
-        getUserList(allianceSelectedCode = "cs");
-        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     /**
@@ -252,5 +278,8 @@ public class AllianceActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+    public void onBackButtonClicked(View view) {
+        setContentView(R.layout.alliance_search);
     }
 }

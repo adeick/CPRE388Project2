@@ -44,11 +44,11 @@
         android:id="@+id/allianceList"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="416dp"
         android:text="GenericMember"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allianceName" />
 
@@ -61,5 +61,15 @@
         android:onClick="onJoinLeaveClick"
         app:layout_constraintBottom_toTopOf="@+id/alliancesText"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TableLayout
+        android:id="@+id/allianceTable"
+        android:layout_width="352dp"
+        android:layout_height="355dp"
+        android:layout_marginTop="24dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allianceName"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
