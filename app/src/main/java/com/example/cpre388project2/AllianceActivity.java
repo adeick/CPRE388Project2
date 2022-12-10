@@ -9,19 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.cpre388project2.towers.Tower;
-import com.example.cpre388project2.towers.TowerTypes;
 import com.example.cpre388project2.util.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,10 +27,12 @@ public class AllianceActivity extends AppCompatActivity {
 
     private Button mainButton;
     private FirebaseFirestore mFirestore;
+    private Button joinLeaveButton;
 
     private TextView allianceName;
 
     private String allianceSelectedCode;
+    private String joinLeaveButtonText;
 
     /**
      * Lifecycle hook to initialize activity.
@@ -52,6 +49,7 @@ public class AllianceActivity extends AppCompatActivity {
         mFirestore = FirebaseUtil.getFirestore();
 
         mainButton = findViewById(R.id.mainButton);
+
     }
 
     private void goToMain() {
@@ -75,7 +73,7 @@ public class AllianceActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        TextView participant = findViewById(R.id.allianceMember1);
+                        TextView participantList = findViewById(R.id.allianceList);
                         if (task.isSuccessful()) {
                             if (task.getResult().size() > 0) { // Members in alliance
                                 String text = "";
@@ -83,11 +81,57 @@ public class AllianceActivity extends AppCompatActivity {
                                     text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
                                 }
 
-                                participant.setText(text);
+                                participantList.setText(text);
+//                                if(joinLeaveButtonText.equals("")){
+////                                    joinLeaveButton.setVisibility(View.INVISIBLE);
+//                                }
+//                                else{
+//                                    joinLeaveButton.setText(joinLeaveButtonText);
+////                                    joinLeaveButton.setVisibility(View.VISIBLE);
+//                                }
                                 return;
                             }
                         }
-                        participant.setText("No members");
+                        participantList.setText("No members");
+                        if(joinLeaveButtonText.equals("")){
+                            joinLeaveButton.setVisibility(View.INVISIBLE);
+                        }
+                        else{
+                            joinLeaveButton.setText(joinLeaveButtonText);
+                            joinLeaveButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+    }
+
+    public void getCurrentUserAllianceStatus(String alliance){
+
+        joinLeaveButton.setText("First");
+        mFirestore.collection("users")
+                .whereEqualTo("userid", FirebaseUtil.getAuth().getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            String firebaseAlliance = task.getResult().getDocuments().get(0).getString("alliance");
+                            System.out.println(">> " + firebaseAlliance);
+                            System.out.println(">> " + firebaseAlliance.equals("se"));
+                            if(firebaseAlliance.equals("")){
+                                joinLeaveButton.setText("Join");
+                                joinLeaveButton.setVisibility(View.VISIBLE);
+                            }
+                            else if(firebaseAlliance.equals(alliance)){
+                                joinLeaveButton.setText("Leave");
+                                joinLeaveButton.setVisibility(View.VISIBLE);
+
+                            }
+                            else{
+                                joinLeaveButtonText="";
+                                joinLeaveButton.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
                     }
                 });
     }
@@ -101,8 +145,11 @@ public class AllianceActivity extends AppCompatActivity {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Software Engineers");
+        joinLeaveButton = findViewById(R.id.joinLeaveButton);
 
-        getUserList(allianceSelectedCode = "se");
+        allianceSelectedCode = "se";
+        getUserList(allianceSelectedCode);
+        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     public void onBackButtonClicked(View view) {
@@ -117,9 +164,10 @@ public class AllianceActivity extends AppCompatActivity {
     public void onComputerEngineerClick(View view) {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
-        allianceName.setText("Computer Engineers");
+        joinLeaveButton = findViewById(R.id.joinLeaveButton);
 
         getUserList(allianceSelectedCode = "cpre");
+        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     /**
@@ -131,8 +179,10 @@ public class AllianceActivity extends AppCompatActivity {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("Electrical Engineers");
+        joinLeaveButton = findViewById(R.id.joinLeaveButton);
 
         getUserList(allianceSelectedCode = "ee");
+        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     /**
@@ -144,8 +194,10 @@ public class AllianceActivity extends AppCompatActivity {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
         allianceName.setText("CS Majors (lol)");
+        joinLeaveButton = findViewById(R.id.joinLeaveButton);
 
         getUserList(allianceSelectedCode = "cs");
+        getCurrentUserAllianceStatus(allianceSelectedCode);
     }
 
     /**
@@ -153,26 +205,52 @@ public class AllianceActivity extends AppCompatActivity {
      *
      * @param view
      */
-    public void onJoinClick(View view) {
+    public void onJoinLeaveClick(View view) {
         String userId = FirebaseUtil.getAuth().getUid();
-        mFirestore.collection("users")
-                .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (task.getResult().size() > 0) { // User data exists
-                                DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
-                                DocumentReference userDocRef = userInfo.getReference();
+        System.out.println("> " + joinLeaveButton.getText());
+        if(joinLeaveButton.getText().equals("Join")) {
+            mFirestore.collection("users")
+                    .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() > 0) { // User data exists
+                                    DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
+                                    DocumentReference userDocRef = userInfo.getReference();
 
-                                Map<String, Object> data = new HashMap<>();
-                                data.put("alliance", allianceSelectedCode);
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("alliance", allianceSelectedCode);
 
-                                userDocRef.update(data);
-                                getUserList(allianceSelectedCode);
-                                return;
+                                    userDocRef.update(data);
+                                    getUserList(allianceSelectedCode);
+                                    getCurrentUserAllianceStatus(allianceSelectedCode);
+                                    return;
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
+        else if(joinLeaveButton.getText().equals("Leave")) {
+            mFirestore.collection("users")
+                    .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (task.getResult().size() > 0) { // User data exists
+                                    DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
+                                    DocumentReference userDocRef = userInfo.getReference();
+
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("alliance", "");
+
+                                    userDocRef.update(data);
+                                    getUserList(allianceSelectedCode);
+                                    getCurrentUserAllianceStatus(allianceSelectedCode);
+                                    return;
+                                }
+                            }
+                        }
+                    });
+        }
     }
 }

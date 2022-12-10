@@ -416,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
-        data.put("username", "");
+        data.put("username", FirebaseUtil.getAuth().getCurrentUser().getDisplayName());
         data.put("bitcoins", 0);
         data.put("storagelevel", 1);
         data.put("alliance", "");
