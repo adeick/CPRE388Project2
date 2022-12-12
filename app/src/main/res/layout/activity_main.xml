@@ -6,17 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/prestigeLevelTextView"
+    <LinearLayout
+        android:id="@+id/navbar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/prestigeLevelText"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/tower"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/allianceButton"
+            style="@style/BitcoinButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alliances" />
+
+        <TextView
+            android:id="@+id/prestigeLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prestigeLevelText"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/toBuyScreen"
+            style="@style/BitcoinButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy Screen" />
+    </LinearLayout>
 
     <!--    <ProgressBar-->
     <!--        android:id="@+id/firewallHealthBar"-->
@@ -45,7 +63,7 @@
         app:indicatorSize="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prestigeLevelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/navbar"
         app:trackColor="@color/white"
         app:trackCornerRadius="8dp"
         app:trackThickness="8dp" />
@@ -57,7 +75,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prestigeLevelTextView">
+        app:layout_constraintTop_toBottomOf="@+id/navbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -182,7 +200,8 @@
         android:id="@+id/bitcoinCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:text="@string/bitcoinCountText"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -193,28 +212,175 @@
         android:id="@+id/firewallInfoTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:text="@string/firewallInfoText"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView"
         tools:layout_editor_absoluteX="1dp" />
 
-    <Button
-        android:id="@+id/allianceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alliances"
-        style="@style/BitcoinButtonStyle"
-        tools:layout_editor_absoluteX="312dp"
-        tools:layout_editor_absoluteY="688dp" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firewallInfoTextView">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/serverCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/serverLevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level 5"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/serverImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/server" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/microprocessorCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/microprocessorLevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level 5"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/microprocessorImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintDimensionRatio="H,1:1"
+                app:srcCompat="@drawable/microprocessor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/GPUCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/GPULevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level 5"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/GPUImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/gpu" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/quantumComputerCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/quantumComputerLevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level 5"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/quantumComputerImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/quantum" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/storageCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textAlignment="center"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/storageLevelTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Level 5"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/storageImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/punchcard" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/toBuyScreen"
-        android:layout_width="wrap_content"
+        android:id="@+id/repairFirewallButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Buy Screen"
-        style="@style/BitcoinButtonStyle"
+        android:layout_weight="1"
+        android:text="Repair Firewall"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
