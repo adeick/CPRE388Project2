@@ -139,12 +139,30 @@ public class BuyScreen extends AppCompatActivity {
     }
 
     private void customize(int pos) {
-//        switch (pos) {
-//            case 0:
-//                ImageView img = (ImageView) findViewById(R.id.storageImageView);
-//                img.setImageResource(R.drawable.punchcard);
-//
-//        }
+        switch (pos){
+            case 0: //customize storage
+                MainActivity.getInstance().cycleStorageCustomImage();
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
+                break;
+            case 1: // customize server
+                MainActivity.getInstance().cycleTowerCustomImage(TowerTypes.SERVER);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
+                break;
+            case 2:
+                MainActivity.getInstance().cycleTowerCustomImage(TowerTypes.MICROPROCESSOR);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
+                break;
+            case 3:
+                MainActivity.getInstance().cycleTowerCustomImage(TowerTypes.GPU);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
+                break;
+            case 4:
+                MainActivity.getInstance().cycleTowerCustomImage(TowerTypes.QUANTUMCOMPUTER);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
+                break;
+            default :
+                break;
+        }
 
     }
 

@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
                 int maxHealth = firewallModel.getMaxHealth();
                 firewallInfoTextView.setText(getString(R.string.firewallInfoText, level, health, maxHealth));
                 firewallInfoTextView.setVisibility(View.VISIBLE);
-                // TODO: set textview to visible and display firewall level, image, and health
             } else {
                 firewallInfoTextView.setVisibility(View.GONE);
             }
