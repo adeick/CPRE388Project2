@@ -54,10 +54,18 @@ public class BitcoinStorageModel extends ViewModel {
         return storageCount.getValue();
     }
 
+    /**
+     * Adds specified amount of storage containers.
+     *
+     * @param amount
+     */
     public void addStorageContainer(int amount) {
         storageCount.setValue(storageCount.getValue() + amount);
     }
 
+    /**
+     * Add new storage container.
+     */
     public void addStorageContainer() {
         addStorageContainer(1);
     }
