@@ -564,7 +564,7 @@ public class MainActivity extends AppCompatActivity {
         // Storage
         storageCountTextView.setText("" + bitcoinStorageModel.getStorageCount());
         storageLevelTextView.setText(getString(R.string.levelText, bitcoinStorageModel.getStorageLevel()));
-        storageImageView.setImageResource(storageCustomImageList[tower.getCustomImageId()]);
+        storageImageView.setImageResource(storageCustomImageList[bitcoinStorageModel.getCustomImageId()]);
     }
 
     private void finishSetup(LifecycleOwner owner) {
