@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="36sp"
         android:clickable="false"
-        android:gravity = "center"
-        android:textSize = "24sp"
-        android:textColor = "@color/black"
-        android:shadowColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:text="@string/element_text" />
+        android:gravity="center"
+        android:shadowColor="@color/gray"
+        android:text="@string/element_text"
+        android:textColor="@color/gray"
+        android:textColorHighlight="@color/gray"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/upgradeButton"
@@ -26,6 +26,7 @@
         android:gravity="center"
         android:text="Updgrade!"
         android:layout_alignParentBottom="true"
+        style="@style/BitcoinButtonStyle"
         android:layout_alignParentLeft="true" />
 
     <Button
@@ -35,6 +36,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        style="@style/BitcoinButtonStyle"
         android:text="Customize!" />
 
     <Button
@@ -47,5 +49,6 @@
         android:layout_marginEnd="133dp"
         android:layout_marginStart="133dp"
         android:gravity="center"
+        style="@style/BitcoinButtonStyle"
         android:text="Buy!" />
 </RelativeLayout>

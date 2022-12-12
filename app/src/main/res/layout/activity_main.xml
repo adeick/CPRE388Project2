@@ -204,6 +204,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Alliances"
+        style="@style/BitcoinButtonStyle"
         tools:layout_editor_absoluteX="312dp"
         tools:layout_editor_absoluteY="688dp" />
 
@@ -211,7 +212,8 @@
         android:id="@+id/toBuyScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="buyScreen"
+        android:text="Buy Screen"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
