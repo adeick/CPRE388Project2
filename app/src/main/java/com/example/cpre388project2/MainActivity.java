@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
                                 for (int i = 0; i < tMaps.size(); i++) {
                                     int customId = 0;
                                     if (tMaps.get(i).get("customImageId") != null) {
-                                        customId = ((Integer) tMaps.get(i).get("towerCustomId")).intValue();
+                                        customId = ((Long) tMaps.get(i).get("customImageId")).intValue();
                                     }
                                     towerModel.setTower(i, new Tower(TowerTypes.valueOf((String) tMaps.get(i).get("towerType")),
                                             ((Long) tMaps.get(i).get("towerLevel")).intValue(),
