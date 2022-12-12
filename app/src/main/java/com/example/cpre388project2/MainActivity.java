@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -70,11 +71,39 @@ public class MainActivity extends AppCompatActivity {
     private Button allianceButton;
 
     private static MainActivity instance;
+    public int[] storageCustomImageList = new int[6];
+    public int[] serverCustomImageList = new int[3];
+    public int[] mpCustomImageList = new int[3];
+    public int[] gpuCustomImageList = new int[3];
+    public int[] qcCustomImageList = new int[3];
+    public int[] fwCustomImageList = new int[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        storageCustomImageList[0] = R.drawable.punchcard;
+        storageCustomImageList[1] = R.drawable.punchcardv2;
+        storageCustomImageList[2] = R.drawable.punchcardv3;
+        storageCustomImageList[3] = R.drawable.diskdrivev1;
+        storageCustomImageList[4] = R.drawable.diskdrivev2;
+        storageCustomImageList[5] = R.drawable.diskdrivev3;
+        serverCustomImageList[0] = R.drawable.server;
+        serverCustomImageList[1] = R.drawable.serverv2;
+        serverCustomImageList[2] = R.drawable.serverv3;
+        mpCustomImageList[0] = R.drawable.microprocessor;
+        mpCustomImageList[1] = R.drawable.microprocessorv2;
+        mpCustomImageList[2] = R.drawable.microprocessorv3;
+        gpuCustomImageList[0] = R.drawable.gpu;
+        gpuCustomImageList[1] = R.drawable.gpuv2;
+        gpuCustomImageList[2] = R.drawable.gpuv3;
+        qcCustomImageList[0] = R.drawable.quantum;
+        qcCustomImageList[1] = R.drawable.quantumv2;
+        qcCustomImageList[2] = R.drawable.quantumv3;
+
+
 
         instance = this;
 

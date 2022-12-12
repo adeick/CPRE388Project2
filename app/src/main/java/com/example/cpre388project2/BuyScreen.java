@@ -138,7 +138,7 @@ public class BuyScreen extends AppCompatActivity {
         switch(pos){
             case 0:
                 ImageView img = (ImageView)findViewById(R.id.storageImageView);
-                
+                img.setImageResource(R.drawable.punchcard);
 
         }
 
