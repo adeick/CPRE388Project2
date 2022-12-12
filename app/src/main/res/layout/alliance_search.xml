@@ -14,6 +14,7 @@
         android:layout_marginEnd="16dp"
         android:onClick="onSoftwareEngineerClick"
         android:text="Software Engineers"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +28,7 @@
         android:layout_marginEnd="16dp"
         android:onClick="onComputerEngineerClick"
         android:text="Computer Engineers"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/se" />
@@ -40,6 +42,7 @@
         android:layout_marginEnd="16dp"
         android:onClick="onElectricalEngineerClick"
         android:text="Electrical Engineers"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cpre" />
@@ -53,6 +56,7 @@
         android:layout_marginEnd="16dp"
         android:onClick="onCSClick"
         android:text="CS (lol)"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ee" />
@@ -66,6 +70,7 @@
         android:fontFamily="sans-serif-medium"
         android:onClick="onMainButtonClick"
         android:text="Main"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

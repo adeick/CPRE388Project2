@@ -37,6 +37,7 @@
         android:layout_marginBottom="16dp"
         android:onClick="onBackButtonClicked"
         android:text="Back"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,6 +60,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:onClick="onJoinLeaveClick"
+        style="@style/BitcoinButtonStyle"
         app:layout_constraintBottom_toTopOf="@+id/alliancesText"
         app:layout_constraintEnd_toEndOf="parent" />
 
