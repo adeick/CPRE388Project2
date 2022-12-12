@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return FirebaseUtil.getAuth().getUid();
     }
 
@@ -365,7 +365,40 @@ public class MainActivity extends AppCompatActivity {
     private void finishSetup(LifecycleOwner owner) {
         towerModel.addTower(TowerTypes.MAINFRAME);
         bitcoinStorageModel.getAmountStored().observe(owner, amount -> {
-            bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, bitcoinStorageModel.getAmountStored().getValue(), "Bit"));
+            String prefix = "Bit";
+            long coins = bitcoinStorageModel.getAmountStored().getValue().longValue();
+            if (coins > Math.pow(1000, 10) * 100) { // Quettabit
+                prefix = "Quettabit";
+                coins /= Math.pow(1000, 10);
+            } else if (coins > Math.pow(1000, 9) * 100) { // Ronnabit
+                prefix = "Ronnabit";
+                coins /= Math.pow(1000, 9);
+            } else if (coins > Math.pow(1000, 8) * 100) { // Yottabit
+                prefix = "Yottabit";
+                coins /= Math.pow(1000, 8);
+            } else if (coins > Math.pow(1000, 7) * 100) { // Zettabit
+                prefix = "Zettabit";
+                coins /= Math.pow(1000, 7);
+            } else if (coins > Math.pow(1000, 6) * 100) { // Exabit
+                prefix = "Exabit";
+                coins /= Math.pow(1000, 6);
+            } else if (coins > Math.pow(1000, 5) * 100) { // Petabit
+                prefix = "Petabit";
+                coins /= Math.pow(1000, 5);
+            } else if (coins > Math.pow(1000, 4) * 100) { // Terabit
+                prefix = "Terabit";
+                coins /= Math.pow(1000, 4);
+            } else if (coins > Math.pow(1000, 3) * 100) { // Gigabit
+                prefix = "Gigabit";
+                coins /= Math.pow(1000, 3);
+            } else if (coins > Math.pow(1000, 2) * 100) { // Megabit
+                prefix = "Megabit";
+                coins /= Math.pow(1000, 2);
+            } else if (coins > Math.pow(1000, 1) * 100) { // Kilobit
+                prefix = "Kilobit";
+                coins /= Math.pow(1000, 1);
+            }
+            bitcoinCountTextView.setText(getString(R.string.bitcoinCountText, coins, prefix));
         });
 
         startAutoClickers();
