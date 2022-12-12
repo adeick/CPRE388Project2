@@ -19,7 +19,7 @@ import com.example.cpre388project2.towers.TowerTypes;
  */
 public class BuyScreen extends AppCompatActivity {
 
-//    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
+    //    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
 //    private enum LayoutManagerType{
 //        GRID_LAYOUT_MANAGER,
 //        LINEAR_LAYOUT_MANAGER
@@ -139,12 +139,12 @@ public class BuyScreen extends AppCompatActivity {
     }
 
     private void customize(int pos) {
-        switch (pos) {
-            case 0:
-                ImageView img = (ImageView) findViewById(R.id.storageImageView);
-
-
-        }
+//        switch (pos) {
+//            case 0:
+//                ImageView img = (ImageView) findViewById(R.id.storageImageView);
+//                img.setImageResource(R.drawable.punchcard);
+//
+//        }
 
     }
 
