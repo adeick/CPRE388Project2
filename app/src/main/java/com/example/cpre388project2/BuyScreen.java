@@ -105,6 +105,10 @@ public class BuyScreen extends AppCompatActivity {
 
     private void buy(int pos){
         switch(pos) {
+            case 0:
+                MainActivity.getInstance().buyStorageOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
+                break;
             case 1:
                 MainActivity.getInstance().buyAutoClickerOnClick(null); //buy a autoclicker
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately

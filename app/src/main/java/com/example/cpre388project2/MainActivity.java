@@ -305,6 +305,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void buyStorageOnClick(View view) {
+        long cost = 2000;
+        if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
+            bitcoinStorageModel.retrieveAmount(cost);
+            bitcoinStorageModel.addStorageContainer();
+        }
+    }
+
     public void upgradeStorageOnClick(View view) {
         long cost = bitcoinStorageModel.getUpgradeCost();
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -355,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                                 DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
                                 userDocRef = userInfo.getReference();
                                 // Set up user from existing data
-                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"));
+                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"), userInfo.getDouble("storagecount").intValue());
 
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
@@ -442,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Storage
+        storageCountTextView.setText("" + bitcoinStorageModel.getStorageCount());
         storageLevelTextView.setText(getString(R.string.levelText, bitcoinStorageModel.getStorageLevel()));
     }
 
@@ -514,6 +523,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("userid", userId);
         data.put("bitcoins", bitcoinStorageModel.getAmountStored().getValue());
         data.put("storagelevel", bitcoinStorageModel.getStorageLevel());
+        data.put("storagecount", bitcoinStorageModel.getStorageCount());
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", autoClickerModel.getNumAutoClickers());
@@ -532,6 +542,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("username", FirebaseUtil.getAuth().getCurrentUser().getDisplayName());
         data.put("bitcoins", 0);
         data.put("storagelevel", 1);
+        data.put("storagecount", 1);
         data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());

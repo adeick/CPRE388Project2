@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModel;
  */
 public class BitcoinStorageModel extends ViewModel {
     private MutableLiveData<Integer> storageLevel;
+    private MutableLiveData<Integer> storageCount;
     private MutableLiveData<Long> currentAmountStored;
 
     /**
      * Initialize to default values.
      */
     public void initialize() {
-        initialize(1, 0);
+        initialize(1, 0, 1);
     }
 
     /**
@@ -23,12 +24,15 @@ public class BitcoinStorageModel extends ViewModel {
      * @param level  Level of bitcoin storage.
      * @param amount Amount of bitcoins in storage.
      */
-    public void initialize(int level, long amount) {
+    public void initialize(int level, long amount, int count) {
         if (storageLevel == null) {
             storageLevel = new MutableLiveData<>(level);
         }
         if (currentAmountStored == null) {
             currentAmountStored = new MutableLiveData<>(amount);
+        }
+        if (storageCount == null) {
+            storageCount = new MutableLiveData<>(count);
         }
     }
 
@@ -39,6 +43,23 @@ public class BitcoinStorageModel extends ViewModel {
      */
     public int getStorageLevel() {
         return storageLevel.getValue();
+    }
+
+    /**
+     * Retrieve the number of storage containers.
+     *
+     * @return The number of storage containers.
+     */
+    public int getStorageCount() {
+        return storageCount.getValue();
+    }
+
+    public void addStorageContainer(int amount) {
+        storageCount.setValue(storageCount.getValue() + amount);
+    }
+
+    public void addStorageContainer() {
+        addStorageContainer(1);
     }
 
     /**
@@ -126,6 +147,6 @@ public class BitcoinStorageModel extends ViewModel {
      * @return Number of bitcoins that can be stored.
      */
     private long storageCapacity() {
-        return (long) (Math.pow(2, storageLevel.getValue() * 3) * 100);
+        return (long) (storageCount.getValue() * (Math.pow(2, storageLevel.getValue() * 3) * 100));
     }
 }
