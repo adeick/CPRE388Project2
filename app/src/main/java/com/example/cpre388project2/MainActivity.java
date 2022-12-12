@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
                                 DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
                                 userDocRef = userInfo.getReference();
                                 // Set up user from existing data
-                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"), userInfo.getDouble("storagecount").intValue());
+                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"), userInfo.getDouble("storagecount").intValue(), 0);
 
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
@@ -647,6 +647,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("bitcoins", bitcoinStorageModel.getAmountStored().getValue());
         data.put("storagelevel", bitcoinStorageModel.getStorageLevel());
         data.put("storagecount", bitcoinStorageModel.getStorageCount());
+        data.put("customimageid", bitcoinStorageModel.getCustomImageId());
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());
         data.put("autoclickers", autoClickerModel.getNumAutoClickers());
@@ -671,6 +672,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("bitcoins", 0);
         data.put("storagelevel", 1);
         data.put("storagecount", 1);
+        data.put("customimageid", 0);
         data.put("alliance", "");
         data.put("lastlogin", new Timestamp(new Date()));
         data.put("towers", towerModel.getTowers());
