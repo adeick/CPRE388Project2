@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cpre388project2.firewall.FirewallModel;
@@ -105,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         qcCustomImageList[0] = R.drawable.quantum;
         qcCustomImageList[1] = R.drawable.quantumv2;
         qcCustomImageList[2] = R.drawable.quantumv3;
-
 
 
         instance = this;
@@ -440,10 +440,14 @@ public class MainActivity extends AppCompatActivity {
 
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
+                                    int customId = 0;
+                                    if (tMaps.get(i).get("towerCustomId") != null) {
+                                        customId = ((Integer) tMaps.get(i).get("towerCustomId")).intValue();
+                                    }
                                     towerModel.setTower(i, new Tower(TowerTypes.valueOf((String) tMaps.get(i).get("towerType")),
                                             ((Long) tMaps.get(i).get("towerLevel")).intValue(),
                                             ((Long) tMaps.get(i).get("towerCount")).intValue(),
-                                            ((Integer) tMaps.get(i).get("towerCustomId")).intValue()
+                                            customId
                                     ));
                                 }
 
@@ -473,18 +477,23 @@ public class MainActivity extends AppCompatActivity {
     private void updateTowerInfoDisplay(ArrayList<Tower> towers) {
         TextView serverCountTextView = (TextView) findViewById(R.id.serverCountTextView);
         TextView serverLevelTextView = (TextView) findViewById(R.id.serverLevelTextView);
+        ImageView serverImageView = (ImageView) findViewById(R.id.serverImageView);
 
         TextView microprocessorCountTextView = (TextView) findViewById(R.id.microprocessorCountTextView);
         TextView microprocessorLevelTextView = (TextView) findViewById(R.id.microprocessorLevelTextView);
+        ImageView microprocessorImageView = (ImageView) findViewById(R.id.microprocessorImageView);
 
         TextView GPUCountTextView = (TextView) findViewById(R.id.GPUCountTextView);
         TextView GPULevelTextView = (TextView) findViewById(R.id.GPULevelTextView);
+        ImageView GPUImageView = (ImageView) findViewById(R.id.GPUImageView);
 
         TextView quantumComputerCountTextView = (TextView) findViewById(R.id.quantumComputerCountTextView);
         TextView quantumComputerLevelTextView = (TextView) findViewById(R.id.quantumComputerLevelTextView);
+        ImageView quantumComputerImageView = (ImageView) findViewById(R.id.quantumComputerImageView);
 
         TextView storageCountTextView = (TextView) findViewById(R.id.storageCountTextView);
         TextView storageLevelTextView = (TextView) findViewById(R.id.storageLevelTextView);
+        ImageView storageImageView = (ImageView) findViewById(R.id.storageImageView);
 
         Tower tower;
 
@@ -493,6 +502,7 @@ public class MainActivity extends AppCompatActivity {
         if (tower != null) {
             serverCountTextView.setText("" + tower.getTowerCount());
             serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+            storageImageView.setImageResource(storageCustomImageList[tower.getCustomImageId()]);
         } else {
             findViewById(R.id.serverTowerInfoView).setVisibility(View.GONE);
         }
