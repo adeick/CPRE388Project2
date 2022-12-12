@@ -10,37 +10,13 @@
         android:id="@+id/prestigeLevelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:text="@string/prestigeLevelText"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/tower"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/bitcoinCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/bitcoinCountText"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="120dp"
-        android:onClick="mainframeOnClick"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mainframe" />
 
     <!--    <ProgressBar-->
     <!--        android:id="@+id/firewallHealthBar"-->
@@ -59,162 +35,169 @@
     <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/firewallHealth"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="75dp"
         android:progress="75"
         android:rotation="45"
         app:indicatorColor="@color/fireColor"
-        app:indicatorSize="180dp"
-        app:layout_constraintDimensionRatio="H,1:1"
+        app:indicatorSize="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/prestigeLevelTextView"
         app:trackColor="@color/white"
         app:trackCornerRadius="8dp"
         app:trackThickness="8dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="409dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView">
+        app:layout_constraintTop_toBottomOf="@+id/prestigeLevelTextView">
 
-        <TextView
-            android:id="@+id/firewallInfoTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/firewallInfoText"
-            android:textAlignment="center" />
+            android:gravity="fill_horizontal"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buyAutoClickerButton"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:id="@+id/hacker0"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker0OnClick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+
+                <ImageView
+                    android:id="@+id/hacker1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker1OnClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+
+                <ImageView
+                    android:id="@+id/hacker2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker2OnClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="buyAutoClickerOnClick"
-            android:text="Buy AutoClicker" />
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/upgradeStorageButton"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/hacker3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker3OnClick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete"
+                    tools:layout_editor_absoluteY="8dp" />
+
+                <ImageView
+                    android:id="@+id/tower"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="mainframeOnClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/mainframe" />
+
+                <ImageView
+                    android:id="@+id/hacker4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker4OnClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="upgradeStorageOnClick"
-            android:text="Upgrade Storage" />
+            android:layout_height="100dp"
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/firewallButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="firewallOnClick"
-            android:text="Upgrade Firewall" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/buyServerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="towerServerOnClick"
-            android:text="Buy Server" />
+                <ImageView
+                    android:id="@+id/hacker5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker5OnClick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
 
-        <Button
-            android:id="@+id/buyQuantumButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="towerQuantumComputerOnClick"
-            android:text="Buy Quantum Computer" />
+                <ImageView
+                    android:id="@+id/hacker6"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker6OnClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
 
-        <Button
-            android:id="@+id/upgradePrestigeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="prestigeOnClick"
-            android:text="Level Up Prestige" />
+                <ImageView
+                    android:id="@+id/hacker7"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:onClick="hacker7OnClick"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/hacker0"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker0OnClick"
-        app:layout_constraintStart_toStartOf="@+id/hacker7"
-        app:layout_constraintTop_toTopOf="@+id/hacker1"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker1OnClick"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/hacker2"
-        app:layout_constraintStart_toEndOf="@+id/hacker0"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker2OnClick"
-        app:layout_constraintEnd_toEndOf="@+id/hacker3"
-        app:layout_constraintTop_toTopOf="@+id/hacker1"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker3OnClick"
-        app:layout_constraintBottom_toTopOf="@+id/hacker4"
+    <TextView
+        android:id="@+id/bitcoinCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/bitcoinCountText"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/hacker2"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker4OnClick"
-        app:layout_constraintBottom_toBottomOf="@+id/hacker5"
-        app:layout_constraintEnd_toEndOf="@+id/hacker3"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker5OnClick"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toStartOf="@+id/hacker4"
-        app:layout_constraintStart_toEndOf="@+id/hacker6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker6OnClick"
-        app:layout_constraintBottom_toBottomOf="@+id/hacker5"
-        app:layout_constraintStart_toStartOf="@+id/hacker7"
-        app:srcCompat="@android:drawable/ic_delete" />
-
-    <ImageView
-        android:id="@+id/hacker7"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="hacker7OnClick"
-        app:layout_constraintBottom_toTopOf="@+id/hacker6"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hacker0"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <TextView
+        android:id="@+id/firewallInfoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/firewallInfoText"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/bitcoinCountTextView"
+        tools:layout_editor_absoluteX="1dp" />
 
     <Button
         android:id="@+id/allianceButton"

@@ -3,7 +3,6 @@ package com.example.cpre388project2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.cpre388project2.firewall.FirewallModel;
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView prestigeLevelTextView = (TextView) findViewById(R.id.prestigeLevelTextView);
         TextView firewallInfoTextView = (TextView) findViewById(R.id.firewallInfoTextView);
-        CircularProgressIndicator firewallHealthBar = (CircularProgressIndicator) findViewById(R.id.progress);
+        CircularProgressIndicator firewallHealthBar = (CircularProgressIndicator) findViewById(R.id.firewallHealth);
 //        ProgressBar firewallBar = (ProgressBar) findViewById(R.id.firewallHealthBar);
 
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             int maxHealth = firewallModel.getMaxHealth();
             int healthRatio = (int) ((float) health / maxHealth * 100);
             firewallInfoTextView.setText(getString(R.string.firewallInfoText, level, health, maxHealth));
-            System.out.println(healthRatio);
             firewallHealthBar.setProgress(healthRatio);
 //            firewallBar.setProgress(healthRatio);
         });
@@ -197,12 +194,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startHackerSpawner() {
-        int initialDelay = 15000;
+        int initialDelay = 15;
 
         hackerSpawnerRunnable = new Runnable() {
             @Override
             public void run() {
-                int delay = 5000;
+                int delay = 5;
                 int randomPos = ((int) (Math.random() * hackerModel.getMaxHackers()));
                 int randomLevel = ((int) (Math.random() * 20));
 
