@@ -77,7 +77,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker0OnClick"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
 
                 <ImageView
                     android:id="@+id/hacker1"
@@ -86,7 +86,7 @@
                     android:onClick="hacker1OnClick"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
 
                 <ImageView
                     android:id="@+id/hacker2"
@@ -94,7 +94,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker2OnClick"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker3OnClick"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete"
+                    app:srcCompat="@drawable/hacker"
                     tools:layout_editor_absoluteY="8dp" />
 
                 <ImageView
@@ -136,7 +136,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker4OnClick"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -157,7 +157,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker5OnClick"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
 
                 <ImageView
                     android:id="@+id/hacker6"
@@ -166,7 +166,7 @@
                     android:onClick="hacker6OnClick"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
 
                 <ImageView
                     android:id="@+id/hacker7"
@@ -174,7 +174,7 @@
                     android:layout_height="100dp"
                     android:onClick="hacker7OnClick"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@android:drawable/ic_delete" />
+                    app:srcCompat="@drawable/hacker" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
