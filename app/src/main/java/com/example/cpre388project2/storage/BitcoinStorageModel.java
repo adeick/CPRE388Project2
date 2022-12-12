@@ -10,6 +10,7 @@ public class BitcoinStorageModel extends ViewModel {
     private MutableLiveData<Integer> storageLevel;
     private MutableLiveData<Integer> storageCount;
     private MutableLiveData<Long> currentAmountStored;
+    private MutableLiveData<Integer> customImageId;
 
     /**
      * Initialize to default values.
@@ -34,6 +35,18 @@ public class BitcoinStorageModel extends ViewModel {
         if (storageCount == null) {
             storageCount = new MutableLiveData<>(count);
         }
+    }
+
+    public int getCustomImageId() {
+        return customImageId.getValue();
+    }
+
+    public void setCustomImageId(int id) {
+        customImageId.setValue(id);
+    }
+
+    public void cycleImageId(int[] imagesList) {
+        customImageId.setValue((customImageId.getValue() + 1) % imagesList.length);
     }
 
     /**

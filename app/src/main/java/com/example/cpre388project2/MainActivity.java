@@ -353,6 +353,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void cycleTowerCustomImage(TowerTypes towerType) {
+        Tower tower = towerModel.getTower(towerType);
+        if (tower != null) {
+            switch (towerType) {
+                case SERVER:
+                    tower.cycleImageId(serverCustomImageList);
+                    break;
+                case MICROPROCESSOR:
+                    tower.cycleImageId(mpCustomImageList);
+                    break;
+                case GPU:
+                    tower.cycleImageId(gpuCustomImageList);
+                    break;
+                case QUANTUMCOMPUTER:
+                    tower.cycleImageId(qcCustomImageList);
+                    break;
+            }
+        }
+    }
+
     /**
      * Buys another storage unit.
      *
@@ -377,6 +397,10 @@ public class MainActivity extends AppCompatActivity {
             bitcoinStorageModel.retrieveAmount(cost);
             bitcoinStorageModel.upgradeStorage();
         }
+    }
+
+    public void cycleStorageCustomImage() {
+        bitcoinStorageModel.cycleImageId(storageCustomImageList);
     }
 
     /**

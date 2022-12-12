@@ -119,6 +119,10 @@ public class Tower {
         customImageId = id;
     }
 
+    public void cycleImageId(int[] imagesList) {
+        customImageId = (customImageId + 1) % imagesList.length;
+    }
+
     /**
      * Calculates cost to buy another tower of given type.
      *
