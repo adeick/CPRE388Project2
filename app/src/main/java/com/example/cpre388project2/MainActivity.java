@@ -242,9 +242,9 @@ public class MainActivity extends AppCompatActivity {
         hackerSpawnerRunnable = new Runnable() {
             @Override
             public void run() {
-                int delay = 5;
+                int delay = 5000;
                 int randomPos = ((int) (Math.random() * hackerModel.getMaxHackers()));
-                int randomLevel = ((int) (Math.random() * 20000));
+                int randomLevel = ((int) (Math.random() * 20));
 
                 hackerModel.setHacker(randomPos, new Hacker(randomLevel));
                 showAttacker(randomPos);
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
                                     int customId = 0;
-                                    if (tMaps.get(i).get("towerCustomId") != null) {
+                                    if (tMaps.get(i).get("customImageId") != null) {
                                         customId = ((Integer) tMaps.get(i).get("towerCustomId")).intValue();
                                     }
                                     towerModel.setTower(i, new Tower(TowerTypes.valueOf((String) tMaps.get(i).get("towerType")),
