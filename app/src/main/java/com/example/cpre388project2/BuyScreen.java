@@ -69,32 +69,35 @@ public class BuyScreen extends AppCompatActivity {
 
 
     private void initDataset(){
-        dataset = new String[]{"Auto Clicker", "Storage", "Server", "Microprocessor", "GPU", "Quantum Computer", "Firewall"};
+        dataset = new String[]{"Storage", "Server", "Microprocessor", "GPU", "Quantum Computer", "Firewall", "Auto Clicker"};
     }
 
     private void upgrade(int pos){
 
         switch(pos) {
-            case 1:
+            case 0:
                 MainActivity.getInstance().upgradeStorageOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
-            case 2:
+            case 1:
                 MainActivity.getInstance().upgradeServerOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
-            case 3:
+            case 2:
                 MainActivity.getInstance().upgradeMicroprocessorOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
-            case 4:
+            case 3:
                 MainActivity.getInstance().upgradeGPUOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
                 break;
-            case 5:
+            case 4:
                 MainActivity.getInstance().upgradeQuantumComputerOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
                 break;
+            case 5:
+                MainActivity.getInstance().firewallOnClick(null);
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId());
             default:
                 break;
         }
@@ -102,7 +105,7 @@ public class BuyScreen extends AppCompatActivity {
 
     private void buy(int pos){
         switch(pos) {
-            case 0:
+            case 1:
                 MainActivity.getInstance().buyAutoClickerOnClick(null); //buy a autoclicker
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;

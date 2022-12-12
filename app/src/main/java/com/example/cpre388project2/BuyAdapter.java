@@ -36,12 +36,15 @@ public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.ViewHolder> {
             super(view);
             listenerRef = new WeakReference<>(listener);
             textView = (TextView) view.findViewById(R.id.textView);
+
+            buy = (Button) view.findViewById(R.id.buyButton);
+            buy.setOnClickListener(this);
+
             upgrade = (Button)view.findViewById(R.id.upgradeButton);
             upgrade.setOnClickListener(this);
             customize = (Button)view.findViewById(R.id.customizeButton);
             customize.setOnClickListener(this);
-            buy = (Button) view.findViewById(R.id.buyButton);
-            buy.setOnClickListener(this);
+
         }
         @Override
         public void onClick(View v){
@@ -66,6 +69,17 @@ public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.ViewHolder> {
 
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.getTextView().setText(purchasableDataSet[position]);
+        if(purchasableDataSet[position].equals("Firewall") ){
+            viewHolder.getBuy().setVisibility(View.GONE);
+        }
+        if(purchasableDataSet[position].equals("Auto Clicker") || purchasableDataSet[position].equals("Firewall")){
+            viewHolder.getCustomize().setVisibility(View.GONE);
+        }
+        if(purchasableDataSet[position].equals("Auto Clicker")){
+            viewHolder.getUpgrade().setVisibility(View.GONE);
+
+        }
+
     }
 
     public int getItemCount(){
