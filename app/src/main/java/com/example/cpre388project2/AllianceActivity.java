@@ -85,8 +85,10 @@ public class AllianceActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if (task.getResult().size() > 0) { // Members in alliance
                                 String text = "";
-//                                allianceTable = findViewById(R.id.allianceTable);
+                                allianceTable = findViewById(R.id.allianceTable);
                                 allianceTable.removeAllViewsInLayout();
+
+
                                 TableRow header = new TableRow(allianceTable.getContext());
                                 TextView tv0 = new TextView(allianceTable.getContext());
                                 tv0.setText(" Username ");
@@ -97,28 +99,35 @@ public class AllianceActivity extends AppCompatActivity {
                                 tv1.setText("  Prestige  ");
                                 tv1.setTextSize(19);
                                 header.addView(tv1);
+
                                 TextView tv2 = new TextView(allianceTable.getContext());
                                 tv2.setText("  Bitcoins  ");
                                 tv2.setTextSize(19);
                                 header.addView(tv2);
+
                                 allianceTable.addView(header);
+
                                 for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
                                     TableRow dataRow = new TableRow(allianceTable.getContext());
+
                                     TextView username = new TextView(allianceTable.getContext());
                                     username.setText(userInfo.get("username").toString());
                                     dataRow.addView(username);
+
                                     TextView prestige = new TextView(allianceTable.getContext());
                                     prestige.setText(userInfo.getLong("prestigelevel").toString());
                                     dataRow.addView(prestige);
+
                                     TextView bitcoins = new TextView(allianceTable.getContext());
                                     bitcoins.setText(adjustBitcoinString(userInfo.getLong("bitcoins")));
                                     dataRow.addView(bitcoins);
-                                    if (userInfo.get("userid") != null && userInfo.get("userid").equals(FirebaseUtil.getAuth().getCurrentUser().getUid())) {
-                                        System.out.print("Set Cyan");
-                                        dataRow.setBackgroundColor(Color.CYAN);
+
+                                    // Change Background color to Yellow if row contains current user
+                                    if (userInfo.get("userid") != null && userInfo.get("userid")
+                                            .equals(FirebaseUtil.getAuth().getCurrentUser().getUid())) {
+                                        dataRow.setBackgroundColor(Color.YELLOW);
                                     }
                                     allianceTable.addView(dataRow);
-//                                    text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
                                 }
 
                                 participantList.setText(text);
