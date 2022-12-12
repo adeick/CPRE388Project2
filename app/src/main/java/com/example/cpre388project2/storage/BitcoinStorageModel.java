@@ -16,7 +16,7 @@ public class BitcoinStorageModel extends ViewModel {
      * Initialize to default values.
      */
     public void initialize() {
-        initialize(1, 0, 1);
+        initialize(1, 0, 1, 0);
     }
 
     /**
@@ -25,7 +25,7 @@ public class BitcoinStorageModel extends ViewModel {
      * @param level  Level of bitcoin storage.
      * @param amount Amount of bitcoins in storage.
      */
-    public void initialize(int level, long amount, int count) {
+    public void initialize(int level, long amount, int count, int imageId) {
         if (storageLevel == null) {
             storageLevel = new MutableLiveData<>(level);
         }
@@ -34,6 +34,9 @@ public class BitcoinStorageModel extends ViewModel {
         }
         if (storageCount == null) {
             storageCount = new MutableLiveData<>(count);
+        }
+        if (customImageId == null) {
+            customImageId = new MutableLiveData<>(imageId);
         }
     }
 
