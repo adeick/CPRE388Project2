@@ -224,14 +224,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startHackerSpawner() {
-        int initialDelay = 15;
+        int initialDelay = 15000;
 
         hackerSpawnerRunnable = new Runnable() {
             @Override
             public void run() {
                 int delay = 5;
                 int randomPos = ((int) (Math.random() * hackerModel.getMaxHackers()));
-                int randomLevel = ((int) (Math.random() * 20));
+                int randomLevel = ((int) (Math.random() * 20000));
 
                 hackerModel.setHacker(randomPos, new Hacker(randomLevel));
                 showAttacker(randomPos);
@@ -439,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
         if (tower != null) {
             serverCountTextView.setText("" + tower.getTowerCount());
             serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
-            storageImageView.setImageResource(storageCustomImageList[tower.getCustomImageId()]);
+            serverImageView.setImageResource(serverCustomImageList[tower.getCustomImageId()]);
         } else {
             findViewById(R.id.serverTowerInfoView).setVisibility(View.GONE);
         }
@@ -449,6 +449,7 @@ public class MainActivity extends AppCompatActivity {
         if (tower != null) {
             microprocessorCountTextView.setText("" + tower.getTowerCount());
             microprocessorLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+            microprocessorImageView.setImageResource(mpCustomImageList[tower.getCustomImageId()]);
         } else {
             findViewById(R.id.microprocessorTowerInfoView).setVisibility(View.GONE);
         }
@@ -458,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
         if (tower != null) {
             GPUCountTextView.setText("" + tower.getTowerCount());
             GPULevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+            GPUImageView.setImageResource(gpuCustomImageList[tower.getCustomImageId()]);
         } else {
             findViewById(R.id.GPUTowerInfoView).setVisibility(View.GONE);
         }
@@ -467,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
         if (tower != null) {
             quantumComputerCountTextView.setText("" + tower.getTowerCount());
             quantumComputerLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+            quantumComputerImageView.setImageResource(qcCustomImageList[tower.getCustomImageId()]);
         } else {
             findViewById(R.id.quantumComputerTowerInfoView).setVisibility(View.GONE);
         }
@@ -474,6 +477,7 @@ public class MainActivity extends AppCompatActivity {
         // Storage
         storageCountTextView.setText("" + bitcoinStorageModel.getStorageCount());
         storageLevelTextView.setText(getString(R.string.levelText, bitcoinStorageModel.getStorageLevel()));
+        storageImageView.setImageResource(storageCustomImageList[tower.getCustomImageId()]);
     }
 
     private void finishSetup(LifecycleOwner owner) {
