@@ -35,6 +35,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         TextView prestigeLevelTextView = (TextView) findViewById(R.id.prestigeLevelTextView);
         TextView firewallInfoTextView = (TextView) findViewById(R.id.firewallInfoTextView);
         CircularProgressIndicator firewallHealthBar = (CircularProgressIndicator) findViewById(R.id.firewallHealth);
-//        ProgressBar firewallBar = (ProgressBar) findViewById(R.id.firewallHealthBar);
 
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 //            firewallBar.setProgress(healthRatio);
         });
 
+
 //        bitcoinStorageModel.initialize();
 //        setupUser(FirebaseUtil.getAuth().getUid());
 
@@ -140,13 +142,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        serverCountTextView.setText("500");
+//        serverLevelTextView.setText(getString(R.string.levelText, 30));
+//        Tower tower;
+//        tower = towerModel.getTower(TowerTypes.SERVER);
+////        tower.getTowerCount();
+////            serverCountTextView.setText(tower.getTowerCount());
+////            serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+//        System.out.println("RUNNING");
+
+//        towerModel.getTowersLiveData().observe(this, towers -> {
+//            Tower tower;
+//            tower = towerModel.getTower(TowerTypes.SERVER, towers);
+//            if (tower != null) {
+//                serverCountTextView.setText(tower.getTowerCount());
+//                serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+//                System.out.println("RUNNING");
+//            }
+//        });
     }
 
     public static MainActivity getInstance() {
         return instance;
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return FirebaseUtil.getAuth().getUid();
     }
 
@@ -293,6 +313,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void repairFirewallOnClick(View view) {
+        firewallModel.repair(firewallModel.getMaxHealth());
+    }
+
     public void mainframeOnClick(View view) {
         gainBitcoin();
     }
@@ -348,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
                                 firewallModel.upgradeFirewall(userInfo.getDouble("firewalllevel").intValue());
 
                                 finishSetup(owner);
+                                updateTowerInfoDisplay(towerModel.getTowers());
                                 return;
                             }
                         }
@@ -360,6 +385,64 @@ public class MainActivity extends AppCompatActivity {
                         finishSetup(owner);
                     }
                 });
+    }
+
+    private void updateTowerInfoDisplay(ArrayList<Tower> towers) {
+        TextView serverCountTextView = (TextView) findViewById(R.id.serverCountTextView);
+        TextView serverLevelTextView = (TextView) findViewById(R.id.serverLevelTextView);
+
+        TextView microprocessorCountTextView = (TextView) findViewById(R.id.microprocessorCountTextView);
+        TextView microprocessorLevelTextView = (TextView) findViewById(R.id.microprocessorLevelTextView);
+
+        TextView GPUCountTextView = (TextView) findViewById(R.id.GPUCountTextView);
+        TextView GPULevelTextView = (TextView) findViewById(R.id.GPULevelTextView);
+
+        TextView quantumComputerCountTextView = (TextView) findViewById(R.id.quantumComputerCountTextView);
+        TextView quantumComputerLevelTextView = (TextView) findViewById(R.id.quantumComputerLevelTextView);
+
+        TextView storageCountTextView = (TextView) findViewById(R.id.storageCountTextView);
+        TextView storageLevelTextView = (TextView) findViewById(R.id.storageLevelTextView);
+
+        Tower tower;
+
+        // Server
+        tower = towerModel.getTower(TowerTypes.SERVER, towers);
+        if (tower != null) {
+            serverCountTextView.setText("" + tower.getTowerCount());
+            serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+        } else {
+            findViewById(R.id.serverTowerInfoView).setVisibility(View.GONE);
+        }
+
+        // Microprocessor
+        tower = towerModel.getTower(TowerTypes.MICROPROCESSOR, towers);
+        if (tower != null) {
+            microprocessorCountTextView.setText("" + tower.getTowerCount());
+            microprocessorLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+        } else {
+            findViewById(R.id.microprocessorTowerInfoView).setVisibility(View.GONE);
+        }
+
+        // GPU
+        tower = towerModel.getTower(TowerTypes.GPU, towers);
+        if (tower != null) {
+            GPUCountTextView.setText("" + tower.getTowerCount());
+            GPULevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+        } else {
+            findViewById(R.id.GPUTowerInfoView).setVisibility(View.GONE);
+        }
+
+        // Quantum Computer
+        tower = towerModel.getTower(TowerTypes.QUANTUMCOMPUTER, towers);
+        if (tower != null) {
+            quantumComputerCountTextView.setText("" + tower.getTowerCount());
+            quantumComputerLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
+        } else {
+            findViewById(R.id.quantumComputerTowerInfoView).setVisibility(View.GONE);
+        }
+
+        // Storage
+        storageLevelTextView.setText(getString(R.string.levelText, bitcoinStorageModel.getStorageLevel()));
     }
 
     private void finishSetup(LifecycleOwner owner) {

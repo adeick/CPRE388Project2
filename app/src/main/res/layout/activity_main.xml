@@ -36,22 +36,6 @@
             android:text="Buy Screen" />
     </LinearLayout>
 
-    <!--    <ProgressBar-->
-    <!--        android:id="@+id/firewallHealthBar"-->
-    <!--        style="@android:style/Widget.ProgressBar.Horizontal"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginStart="90dp"-->
-    <!--        android:layout_marginTop="90dp"-->
-    <!--        android:layout_marginEnd="90dp"-->
-    <!--        android:max="100"-->
-    <!--        android:progress="25"-->
-    <!--        android:progressDrawable="@drawable/circular"-->
-    <!--        app:layout_constraintDimensionRatio="H,1:1"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/firewallHealth"
         android:layout_width="100dp"
@@ -229,6 +213,7 @@
         app:layout_constraintTop_toBottomOf="@+id/firewallInfoTextView">
 
         <LinearLayout
+            android:id="@+id/serverTowerInfoView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -246,7 +231,7 @@
                 android:id="@+id/serverLevelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5"
+                android:text="@string/levelText"
                 android:textAlignment="center" />
 
             <ImageView
@@ -258,6 +243,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/microprocessorTowerInfoView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -275,7 +261,7 @@
                 android:id="@+id/microprocessorLevelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5"
+                android:text="@string/levelText"
                 android:textAlignment="center" />
 
             <ImageView
@@ -287,6 +273,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/GPUTowerInfoView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -304,7 +291,7 @@
                 android:id="@+id/GPULevelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5"
+                android:text="@string/levelText"
                 android:textAlignment="center" />
 
             <ImageView
@@ -315,6 +302,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/quantumComputerTowerInfoView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -332,7 +320,7 @@
                 android:id="@+id/quantumComputerLevelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5"
+                android:text="@string/levelText"
                 android:textAlignment="center" />
 
             <ImageView
@@ -343,6 +331,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/storageInfoView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -360,7 +349,7 @@
                 android:id="@+id/storageLevelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5"
+                android:text="@string/levelText"
                 android:textAlignment="center" />
 
             <ImageView
@@ -378,6 +367,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:onClick="repairFirewallOnClick"
         android:text="Repair Firewall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

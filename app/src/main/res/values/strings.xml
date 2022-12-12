@@ -3,5 +3,6 @@
     <string name="bitcoinCountText">%1$d %2$sCoin</string>
     <string name="prestigeLevelText">Prestige Level: %1$d</string>
     <string name="firewallInfoText">Firewall: Level: %1$d Health: %2$d / %3$d</string>
+    <string name="levelText">Level %1$d</string>
     <string name="element_text">Element</string>
 </resources>
