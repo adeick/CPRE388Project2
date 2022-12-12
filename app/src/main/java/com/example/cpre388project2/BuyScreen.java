@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.cpre388project2.towers.TowerTypes;
 
@@ -110,31 +111,38 @@ public class BuyScreen extends AppCompatActivity {
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
             case 1:
-                MainActivity.getInstance().buyAutoClickerOnClick(null); //buy a autoclicker
-                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
-                break;
-            case 2:
                 MainActivity.getInstance().buyTower(TowerTypes.SERVER); // buy a server
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
-            case 3:
+            case 2:
                 MainActivity.getInstance().buyTower(TowerTypes.MICROPROCESSOR);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
-            case 4:
+            case 3:
                 MainActivity.getInstance().buyTower(TowerTypes.GPU);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
                 break;
-            case 5:
+            case 4:
                 MainActivity.getInstance().buyTower(TowerTypes.QUANTUMCOMPUTER);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
+            case 6:
+                MainActivity.getInstance().buyAutoClickerOnClick(null); //buy a autoclicker
+                MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
             default:
                 break;
         }
     }
 
-    private void customize(int pos){}
+    private void customize(int pos){
+        switch(pos){
+            case 0:
+                ImageView img = (ImageView)findViewById(R.id.storageImageView);
+                
+
+        }
+
+    }
 
 
 }
