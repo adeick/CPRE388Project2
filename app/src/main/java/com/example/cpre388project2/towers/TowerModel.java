@@ -11,6 +11,12 @@ import java.util.ArrayList;
 public class TowerModel extends ViewModel {
     private MutableLiveData<ArrayList<Tower>> towers;
 
+    /**
+     * Grab tower object of specified type from the passed in list of towers,.
+     * @param towerType TowerType enum
+     * @param towers Tower object
+     * @return
+     */
     public Tower getTower(TowerTypes towerType, ArrayList<Tower> towers) {
         for (Tower tower : towers) {
             if (tower.getTowerType() == towerType) {
@@ -66,6 +72,10 @@ public class TowerModel extends ViewModel {
         return towers.getValue();
     }
 
+    /**
+     * Get the live data of the arraylist of towers
+     * @return MutableLiveData of arraylist of towers
+     */
     public MutableLiveData<ArrayList<Tower>> getTowersLiveData() {
         if (towers == null) {
             towers = new MutableLiveData<>(new ArrayList<>());

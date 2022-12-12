@@ -75,13 +75,31 @@ public class MainActivity extends AppCompatActivity {
     private Button allianceButton;
 
     private static MainActivity instance;
-    public int[] storageCustomImageList = new int[6];
-    public int[] serverCustomImageList = new int[3];
-    public int[] mpCustomImageList = new int[3];
-    public int[] gpuCustomImageList = new int[3];
-    public int[] qcCustomImageList = new int[3];
-    public int[] fwCustomImageList = new int[3];
 
+    /**
+     * List of storage custom images
+     */
+    public int[] storageCustomImageList = new int[6];
+
+    /**
+     * List of server custom images
+     */
+    public int[] serverCustomImageList = new int[3];
+
+    /**
+     * List of microprocessor custom images
+     */
+    public int[] mpCustomImageList = new int[3];
+
+    /**
+     * List of GPU custom images
+     */
+    public int[] gpuCustomImageList = new int[3];
+
+    /**
+     * List of quantum computer custom images
+     */
+    public int[] qcCustomImageList = new int[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,12 +162,8 @@ public class MainActivity extends AppCompatActivity {
             int healthRatio = (int) ((float) health / maxHealth * 100);
             firewallInfoTextView.setText(getString(R.string.firewallInfoText, level, health, maxHealth));
             firewallHealthBar.setProgress(healthRatio);
-//            firewallBar.setProgress(healthRatio);
         });
 
-
-//        bitcoinStorageModel.initialize();
-//        setupUser(FirebaseUtil.getAuth().getUid());
 
         bitcoinCountTextView = findViewById(R.id.bitcoinCountTextView);
         hideAllHackers();
@@ -291,22 +305,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public void towerServerOnClick(View view) { // I think we can delete these safely
-//        buyTower(TowerTypes.SERVER);
-//    }
-//
-//    public void towerMicroProcessorOnClick(View view) {
-//        buyTower(TowerTypes.MICROPROCESSOR);
-//    }
-//
-//    public void towerGPUOnClick(View view) {
-//        buyTower(TowerTypes.GPU);
-//    }
-//
-//    public void towerQuantumComputerOnClick(View view) {
-//        buyTower(TowerTypes.QUANTUMCOMPUTER);
-//    }
-
     /**
      * Buys the tower of specified type.
      *
@@ -319,22 +317,6 @@ public class MainActivity extends AppCompatActivity {
             towerModel.addTower(towerType);
         }
     }
-
-//    public void upgradeServerOnClick(View view) { // I think these are safe delete
-//        upgradeTower(TowerTypes.SERVER);
-//    }
-//
-//    public void upgradeMicroprocessorOnClick(View view) {
-//        upgradeTower(TowerTypes.MICROPROCESSOR);
-//    }
-//
-//    public void upgradeGPUOnClick(View view) {
-//        upgradeTower(TowerTypes.GPU);
-//    }
-//
-//    public void upgradeQuantumComputerOnClick(View view) {
-//        upgradeTower(TowerTypes.QUANTUMCOMPUTER);
-//    }
 
     /**
      * Upgrades the tower of the specified type.
@@ -352,6 +334,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cycle through the custom images for each of the tower types based on the type passed in.
+     * @param towerType The tower type enum.
+     */
     public void cycleTowerCustomImage(TowerTypes towerType) {
         Tower tower = towerModel.getTower(towerType);
         if (tower != null) {
@@ -398,6 +384,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cycle the custom image for the storage.
+     */
     public void cycleStorageCustomImage() {
         bitcoinStorageModel.cycleImageId(storageCustomImageList);
     }

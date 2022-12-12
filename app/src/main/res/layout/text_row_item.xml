@@ -21,13 +21,13 @@
 
     <Button
         android:id="@+id/upgradeButton"
+        style="@style/BitcoinButtonStyle"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:gravity="center"
-        android:text="Updgrade!"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        style="@style/BitcoinButtonStyle"
-        android:layout_alignParentLeft="true" />
+        android:gravity="center"
+        android:text="Upgrade!" />
 
     <Button
         android:id="@+id/customizeButton"
