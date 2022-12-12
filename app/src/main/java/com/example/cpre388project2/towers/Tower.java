@@ -8,6 +8,7 @@ public class Tower {
     private TowerTypes towerType;
     private int towerLevel;
     private int towerCount;
+    private int customImageId;
 
     /**
      * Constructs a Tower.
@@ -15,7 +16,7 @@ public class Tower {
      * @param _towerType TowerType enum for type of tower.
      */
     public Tower(TowerTypes _towerType) {
-        this(_towerType, 1, 1);
+        this(_towerType, 1, 1, 0);
     }
 
     /**
@@ -25,10 +26,11 @@ public class Tower {
      * @param _towerLevel Level of tower.
      * @param _towerCount Number of towers.
      */
-    public Tower(TowerTypes _towerType, int _towerLevel, int _towerCount) {
+    public Tower(TowerTypes _towerType, int _towerLevel, int _towerCount, int _customImageId) {
         towerType = _towerType;
         towerLevel = _towerLevel;
         towerCount = _towerCount;
+        customImageId = _customImageId;
     }
 
     /**
@@ -107,6 +109,14 @@ public class Tower {
      */
     public void addTowers(int count) {
         towerCount += count;
+    }
+
+    public int getCustomImageId() {
+        return customImageId;
+    }
+
+    public void setCustomImageId(int id) {
+        customImageId = id;
     }
 
     /**

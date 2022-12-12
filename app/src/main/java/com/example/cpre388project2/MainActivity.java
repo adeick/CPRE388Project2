@@ -141,25 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 goToAlliances();
             }
         });
-
-//        serverCountTextView.setText("500");
-//        serverLevelTextView.setText(getString(R.string.levelText, 30));
-//        Tower tower;
-//        tower = towerModel.getTower(TowerTypes.SERVER);
-////        tower.getTowerCount();
-////            serverCountTextView.setText(tower.getTowerCount());
-////            serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
-//        System.out.println("RUNNING");
-
-//        towerModel.getTowersLiveData().observe(this, towers -> {
-//            Tower tower;
-//            tower = towerModel.getTower(TowerTypes.SERVER, towers);
-//            if (tower != null) {
-//                serverCountTextView.setText(tower.getTowerCount());
-//                serverLevelTextView.setText(getString(R.string.levelText, tower.getTowerLevel()));
-//                System.out.println("RUNNING");
-//            }
-//        });
     }
 
     public static MainActivity getInstance() {
@@ -369,7 +350,9 @@ public class MainActivity extends AppCompatActivity {
                                 for (int i = 0; i < tMaps.size(); i++) {
                                     towerModel.setTower(i, new Tower(TowerTypes.valueOf((String) tMaps.get(i).get("towerType")),
                                             ((Long) tMaps.get(i).get("towerLevel")).intValue(),
-                                            ((Long) tMaps.get(i).get("towerCount")).intValue()));
+                                            ((Long) tMaps.get(i).get("towerCount")).intValue(),
+                                            ((Integer) tMaps.get(i).get("towerCustomId")).intValue()
+                                    ));
                                 }
 
                                 autoClickerModel.setNumAutoClickers((int) userInfo.getDouble("autoclickers").intValue());
