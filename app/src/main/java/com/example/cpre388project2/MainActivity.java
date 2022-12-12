@@ -45,6 +45,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Main screen where most of the logic in the app happens.
+ */
 public class MainActivity extends AppCompatActivity {
 
     // View Models
@@ -172,10 +175,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Returns the only instance of this class.
+     *
+     * @return MainActivity instance.
+     */
     public static MainActivity getInstance() {
         return instance;
     }
 
+    /**
+     * Gets the numerical user id as a string for the current user.
+     *
+     * @return String of user id.
+     */
     public String getUserId() {
         return FirebaseUtil.getAuth().getUid();
     }
@@ -241,6 +254,11 @@ public class MainActivity extends AppCompatActivity {
         handler.postAtTime(hackerSpawnerRunnable, SystemClock.uptimeMillis() + initialDelay);
     }
 
+    /**
+     * Upgrades the firewall.
+     *
+     * @param view
+     */
     public void firewallOnClick(View view) {
         long cost = firewallModel.firewallUpgradeCost();
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -249,6 +267,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Buys an auto clicker.
+     *
+     * @param view
+     */
     public void buyAutoClickerOnClick(View view) {
         long cost = 20;
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -257,6 +280,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Buys an increase in prestige.
+     *
+     * @param view
+     */
     public void prestigeOnClick(View view) {
         if (prestigeModel.canAffordNextPrestige(bitcoinStorageModel.getAmountStored().getValue())) {
             bitcoinStorageModel.retrieveAmount(prestigeModel.nextPrestigeCost());
@@ -264,22 +292,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void towerServerOnClick(View view) {
-        buyTower(TowerTypes.SERVER);
-    }
+//    public void towerServerOnClick(View view) { // I think we can delete these safely
+//        buyTower(TowerTypes.SERVER);
+//    }
+//
+//    public void towerMicroProcessorOnClick(View view) {
+//        buyTower(TowerTypes.MICROPROCESSOR);
+//    }
+//
+//    public void towerGPUOnClick(View view) {
+//        buyTower(TowerTypes.GPU);
+//    }
+//
+//    public void towerQuantumComputerOnClick(View view) {
+//        buyTower(TowerTypes.QUANTUMCOMPUTER);
+//    }
 
-    public void towerMicroProcessorOnClick(View view) {
-        buyTower(TowerTypes.MICROPROCESSOR);
-    }
-
-    public void towerGPUOnClick(View view) {
-        buyTower(TowerTypes.GPU);
-    }
-
-    public void towerQuantumComputerOnClick(View view) {
-        buyTower(TowerTypes.QUANTUMCOMPUTER);
-    }
-
+    /**
+     * Buys the tower of specified type.
+     *
+     * @param towerType TowerTypes enum for type of tower.
+     */
     public void buyTower(TowerTypes towerType) {
         long cost = Tower.getPurchaseCost(towerType);
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -288,23 +321,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void upgradeServerOnClick(View view) {
-        upgradeTower(TowerTypes.SERVER);
-    }
+//    public void upgradeServerOnClick(View view) { // I think these are safe delete
+//        upgradeTower(TowerTypes.SERVER);
+//    }
+//
+//    public void upgradeMicroprocessorOnClick(View view) {
+//        upgradeTower(TowerTypes.MICROPROCESSOR);
+//    }
+//
+//    public void upgradeGPUOnClick(View view) {
+//        upgradeTower(TowerTypes.GPU);
+//    }
+//
+//    public void upgradeQuantumComputerOnClick(View view) {
+//        upgradeTower(TowerTypes.QUANTUMCOMPUTER);
+//    }
 
-    public void upgradeMicroprocessorOnClick(View view) {
-        upgradeTower(TowerTypes.MICROPROCESSOR);
-    }
-
-    public void upgradeGPUOnClick(View view) {
-        upgradeTower(TowerTypes.GPU);
-    }
-
-    public void upgradeQuantumComputerOnClick(View view) {
-        upgradeTower(TowerTypes.QUANTUMCOMPUTER);
-    }
-
-    private void upgradeTower(TowerTypes towerType) {
+    /**
+     * Upgrades the tower of the specified type.
+     *
+     * @param towerType TowerTypes enum for type of tower.
+     */
+    public void upgradeTower(TowerTypes towerType) {
         Tower tower = towerModel.getTower(towerType);
         if (tower != null) {
             long cost = tower.getUpgradeCost();
@@ -315,6 +353,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Buys another storage unit.
+     *
+     * @param view
+     */
     public void buyStorageOnClick(View view) {
         long cost = 2000;
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -323,6 +366,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Upgrades level of storage.
+     *
+     * @param view
+     */
     public void upgradeStorageOnClick(View view) {
         long cost = bitcoinStorageModel.getUpgradeCost();
         if (bitcoinStorageModel.getAmountStored().getValue() >= cost) {
@@ -331,10 +379,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Repairs firewall.
+     *
+     * @param view
+     */
     public void repairFirewallOnClick(View view) {
         firewallModel.repair(firewallModel.getMaxHealth());
     }
 
+    /**
+     * OnClick to gain bitcoin when clicking on screen.
+     *
+     * @param view
+     */
     public void mainframeOnClick(View view) {
         gainBitcoin();
     }
@@ -361,6 +419,11 @@ public class MainActivity extends AppCompatActivity {
         return getBitCoinPerTower(1);
     }
 
+    /**
+     * Loads previous user if existing or else begins creating new user.
+     *
+     * @param userId String for user's firebase id.
+     */
     public void setupUser(String userId) {
         LifecycleOwner owner = this;
         mFirestore.collection("users")
@@ -523,6 +586,9 @@ public class MainActivity extends AppCompatActivity {
         startHackerSpawner();
     }
 
+    /**
+     * Lifecycle hook that handles signing in and setting up user.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -535,6 +601,9 @@ public class MainActivity extends AppCompatActivity {
         setupUser(FirebaseUtil.getAuth().getUid());
     }
 
+    /**
+     * Lifecycle hook that handles saving user data.
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -544,6 +613,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Saves user data to firebase based on user id.
+     *
+     * @param userId User's firebase id.
+     */
     public void saveUser(String userId) {
         Map<String, Object> data = new HashMap<>();
         data.put("userid", userId);
@@ -559,6 +633,11 @@ public class MainActivity extends AppCompatActivity {
         userDocRef.update(data);
     }
 
+    /**
+     * Creates new user in firebase.
+     *
+     * @param userId User's firebase id.
+     */
     public void createUser(String userId) {
         if (userId == null) {
             return;
@@ -642,41 +721,81 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker0OnClick(View view) {
         hackerModel.setHacker(0, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker1OnClick(View view) {
         hackerModel.setHacker(1, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker2OnClick(View view) {
         hackerModel.setHacker(2, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker3OnClick(View view) {
         hackerModel.setHacker(3, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker4OnClick(View view) {
         hackerModel.setHacker(4, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker5OnClick(View view) {
         hackerModel.setHacker(5, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker6OnClick(View view) {
         hackerModel.setHacker(6, null, true);
         view.setVisibility(View.GONE);
     }
 
+    /**
+     * Make hacker go away when clicked.
+     *
+     * @param view
+     */
     public void hacker7OnClick(View view) {
         hackerModel.setHacker(7, null, true);
         view.setVisibility(View.GONE);

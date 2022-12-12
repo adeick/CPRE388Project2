@@ -3,6 +3,9 @@ package com.example.cpre388project2.firewall;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * View Model that represents a firewall.
+ */
 public class FirewallModel extends ViewModel {
     private MutableLiveData<Integer> firewallLevel;
     private MutableLiveData<Integer> currentHealth;
@@ -20,16 +23,29 @@ public class FirewallModel extends ViewModel {
         currentHealth.setValue(newHealth);
     }
 
+    /**
+     * Upgrade firewall by one level.
+     */
     public void upgradeFirewall() {
         upgradeFirewall(1);
     }
 
+    /**
+     * Upgrade firewall by specified amount of levels.
+     *
+     * @param level Amount of levels to increase firewall by.
+     */
     public void upgradeFirewall(int level) {
         checkNull();
         firewallLevel.setValue(firewallLevel.getValue() + level);
         currentHealth.setValue(getMaxHealth());
     }
 
+    /**
+     * Get upgrade cost of firewall.
+     *
+     * @return Upgrade cost in bitcoins.
+     */
     public long firewallUpgradeCost() {
         checkNull();
         return (long) (Math.pow(2, firewallLevel.getValue()) * 500);
@@ -60,12 +76,6 @@ public class FirewallModel extends ViewModel {
     }
 
     /**
-     * Retrieve the max health that this object can have.
-     *
-     * @return The max health of the object.
-     */
-
-    /**
      * Retrieve the current health of the object.
      *
      * @return The current health of the object.
@@ -75,13 +85,20 @@ public class FirewallModel extends ViewModel {
         return currentHealth;
     }
 
+    /**
+     * Gets current firewall level.
+     *
+     * @return Firewall level.
+     */
     public MutableLiveData<Integer> getFirewallLevel() {
         checkNull();
         return firewallLevel;
     }
 
     /**
-     * @return Max health of firewall
+     * Retrieve the max health that this object can have.
+     *
+     * @return The max health of the object.
      */
     public int getMaxHealth() {
         if (firewallLevel == null) {
@@ -90,6 +107,11 @@ public class FirewallModel extends ViewModel {
         return (int) (Math.pow(firewallLevel.getValue(), 2) * 200);
     }
 
+    /**
+     * Sets firewall health to specified value.
+     *
+     * @param health New health of firewall.
+     */
     public void setCurrentHealth(int health) {
         checkNull();
         currentHealth.setValue(health);

@@ -14,9 +14,12 @@ import android.widget.ImageView;
 
 import com.example.cpre388project2.towers.TowerTypes;
 
+/**
+ * Handles buttons being pressed on the buy screen.
+ */
 public class BuyScreen extends AppCompatActivity {
 
-//    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
+    //    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
 //    private enum LayoutManagerType{
 //        GRID_LAYOUT_MANAGER,
 //        LINEAR_LAYOUT_MANAGER
@@ -26,7 +29,7 @@ public class BuyScreen extends AppCompatActivity {
 //
     private RecyclerView recyclerView;
     private BuyAdapter adapter;
-//    private RecyclerView.LayoutManager layoutManager;
+    //    private RecyclerView.LayoutManager layoutManager;
     private String[] dataset;
 
     @Override
@@ -39,12 +42,13 @@ public class BuyScreen extends AppCompatActivity {
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BuyAdapter(dataset, new BuyListener() {
-            @Override public void onPositionClicked(int pos, String name) {
-                if(name.equals("upgradeButton")){
+            @Override
+            public void onPositionClicked(int pos, String name) {
+                if (name.equals("upgradeButton")) {
                     upgrade(pos);
-                }else if(name.equals("buyButton")){
+                } else if (name.equals("buyButton")) {
                     buy(pos);
-                }else if(name.equals("customizeButton")){
+                } else if (name.equals("customizeButton")) {
                     customize(pos);
                 }
 
@@ -52,7 +56,7 @@ public class BuyScreen extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
-        Button butt = (Button)findViewById(R.id.button2);
+        Button butt = (Button) findViewById(R.id.button2);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,31 +73,31 @@ public class BuyScreen extends AppCompatActivity {
 //    }
 
 
-    private void initDataset(){
+    private void initDataset() {
         dataset = new String[]{"Storage", "Server", "Microprocessor", "GPU", "Quantum Computer", "Firewall", "Auto Clicker"};
     }
 
-    private void upgrade(int pos){
+    private void upgrade(int pos) {
 
-        switch(pos) {
+        switch (pos) {
             case 0:
                 MainActivity.getInstance().upgradeStorageOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
             case 1:
-                MainActivity.getInstance().upgradeServerOnClick(null);
+                MainActivity.getInstance().upgradeTower(TowerTypes.SERVER);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
             case 2:
-                MainActivity.getInstance().upgradeMicroprocessorOnClick(null);
+                MainActivity.getInstance().upgradeTower(TowerTypes.MICROPROCESSOR);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
                 break;
             case 3:
-                MainActivity.getInstance().upgradeGPUOnClick(null);
+                MainActivity.getInstance().upgradeTower(TowerTypes.GPU);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
                 break;
             case 4:
-                MainActivity.getInstance().upgradeQuantumComputerOnClick(null);
+                MainActivity.getInstance().upgradeTower(TowerTypes.QUANTUMCOMPUTER);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediatel
                 break;
             case 5:
@@ -104,8 +108,8 @@ public class BuyScreen extends AppCompatActivity {
         }
     }
 
-    private void buy(int pos){
-        switch(pos) {
+    private void buy(int pos) {
+        switch (pos) {
             case 0:
                 MainActivity.getInstance().buyStorageOnClick(null);
                 MainActivity.getInstance().saveUser(MainActivity.getInstance().getUserId()); // Make sure to save immediately
@@ -134,13 +138,13 @@ public class BuyScreen extends AppCompatActivity {
         }
     }
 
-    private void customize(int pos){
-        switch(pos){
-            case 0:
-                ImageView img = (ImageView)findViewById(R.id.storageImageView);
-                img.setImageResource(R.drawable.punchcard);
-
-        }
+    private void customize(int pos) {
+//        switch (pos) {
+//            case 0:
+//                ImageView img = (ImageView) findViewById(R.id.storageImageView);
+//                img.setImageResource(R.drawable.punchcard);
+//
+//        }
 
     }
 

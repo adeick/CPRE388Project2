@@ -36,6 +36,7 @@ public class AllianceActivity extends AppCompatActivity {
 
     private String allianceSelectedCode;
     private TableLayout allianceTable;
+
     /**
      * Lifecycle hook to initialize activity.
      *
@@ -68,6 +69,11 @@ public class AllianceActivity extends AppCompatActivity {
         goToMain();
     }
 
+    /**
+     * Gets a list of every user in an alliance and displays it on the page.
+     *
+     * @param alliance
+     */
     public void getUserList(String alliance) {
         mFirestore.collection("users")
                 .whereEqualTo("alliance", alliance)
@@ -96,22 +102,22 @@ public class AllianceActivity extends AppCompatActivity {
                                 tv2.setTextSize(19);
                                 header.addView(tv2);
                                 allianceTable.addView(header);
-                            for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
-                                TableRow dataRow = new TableRow(allianceTable.getContext());
-                                TextView username = new TextView(allianceTable.getContext());
-                                username.setText(userInfo.get("username").toString());
-                                dataRow.addView(username);
-                                TextView prestige = new TextView(allianceTable.getContext());
-                                prestige.setText(userInfo.getLong("prestigelevel").toString());
-                                dataRow.addView(prestige);
-                                TextView bitcoins = new TextView(allianceTable.getContext());
-                                bitcoins.setText(adjustBitcoinString(userInfo.getLong("bitcoins")));
-                                dataRow.addView(bitcoins);
-                                if(userInfo.get("userid") != null && userInfo.get("userid").equals(FirebaseUtil.getAuth().getCurrentUser().getUid())){
-                                    System.out.print("Set Cyan");
-                                    dataRow.setBackgroundColor(Color.CYAN);
-                                }
-                                allianceTable.addView(dataRow);
+                                for (DocumentSnapshot userInfo : task.getResult().getDocuments()) {
+                                    TableRow dataRow = new TableRow(allianceTable.getContext());
+                                    TextView username = new TextView(allianceTable.getContext());
+                                    username.setText(userInfo.get("username").toString());
+                                    dataRow.addView(username);
+                                    TextView prestige = new TextView(allianceTable.getContext());
+                                    prestige.setText(userInfo.getLong("prestigelevel").toString());
+                                    dataRow.addView(prestige);
+                                    TextView bitcoins = new TextView(allianceTable.getContext());
+                                    bitcoins.setText(adjustBitcoinString(userInfo.getLong("bitcoins")));
+                                    dataRow.addView(bitcoins);
+                                    if (userInfo.get("userid") != null && userInfo.get("userid").equals(FirebaseUtil.getAuth().getCurrentUser().getUid())) {
+                                        System.out.print("Set Cyan");
+                                        dataRow.setBackgroundColor(Color.CYAN);
+                                    }
+                                    allianceTable.addView(dataRow);
 //                                    text += userInfo.get("username") + " - Prestige: " + userInfo.getLong("prestigelevel") + ", Bitcoins: " + userInfo.getLong("bitcoins") + "\n";
                                 }
 
@@ -124,25 +130,28 @@ public class AllianceActivity extends AppCompatActivity {
                 });
     }
 
-    public void getCurrentUserAllianceStatus(String alliance){
+    /**
+     * Displays join or leave buttons depending on user's status in displayed alliance.
+     *
+     * @param alliance Alliance being viewed.
+     */
+    public void getCurrentUserAllianceStatus(String alliance) {
         mFirestore.collection("users")
                 .whereEqualTo("userid", FirebaseUtil.getAuth().getCurrentUser().getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             String firebaseAlliance = task.getResult().getDocuments().get(0).getString("alliance");
-                            if(firebaseAlliance.equals("")){
+                            if (firebaseAlliance.equals("")) {
                                 joinLeaveButton.setText("Join");
                                 joinLeaveButton.setVisibility(View.VISIBLE);
-                            }
-                            else if(firebaseAlliance.equals(alliance)){
+                            } else if (firebaseAlliance.equals(alliance)) {
                                 joinLeaveButton.setText("Leave");
                                 joinLeaveButton.setVisibility(View.VISIBLE);
 
-                            }
-                            else{
+                            } else {
                                 joinLeaveButton.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -151,18 +160,18 @@ public class AllianceActivity extends AppCompatActivity {
                 });
     }
 
-    private String adjustBitcoinString(long bitcoinAmount){
-        if(bitcoinAmount / (1000000000) > 0){
+    private String adjustBitcoinString(long bitcoinAmount) {
+        if (bitcoinAmount / (1000000000) > 0) {
             double reduced = ((double) bitcoinAmount / 1000000000);
             String str = String.format("%.1f billion", reduced);
             return str;
         }
-        if(bitcoinAmount / (1000000) > 0){
+        if (bitcoinAmount / (1000000) > 0) {
             double reduced = ((double) bitcoinAmount / 1000000);
             String str = String.format("%.1f million", reduced);
             return str;
         }
-        if(bitcoinAmount / (1000) > 0){
+        if (bitcoinAmount / (1000) > 0) {
             double reduced = ((double) bitcoinAmount / 1000);
             String str = String.format("%.1f thousand", reduced);
             return str;
@@ -170,7 +179,7 @@ public class AllianceActivity extends AppCompatActivity {
         return (Long.toString(bitcoinAmount));
     }
 
-    private void onAllianceClick(){
+    private void onAllianceClick() {
         setContentView(R.layout.alliance_join);
         allianceName = findViewById(R.id.allianceName);
 
@@ -193,7 +202,7 @@ public class AllianceActivity extends AppCompatActivity {
         allianceName.setText("Software Engineers");
     }
 
-     /**
+    /**
      * onClick method to display "Computer Engineers" alliance
      *
      * @param view
@@ -234,7 +243,7 @@ public class AllianceActivity extends AppCompatActivity {
     public void onJoinLeaveClick(View view) {
         String userId = FirebaseUtil.getAuth().getUid();
         System.out.println("> " + joinLeaveButton.getText());
-        if(joinLeaveButton.getText().equals("Join")) {
+        if (joinLeaveButton.getText().equals("Join")) {
             mFirestore.collection("users")
                     .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -255,8 +264,7 @@ public class AllianceActivity extends AppCompatActivity {
                             }
                         }
                     });
-        }
-        else if(joinLeaveButton.getText().equals("Leave")) {
+        } else if (joinLeaveButton.getText().equals("Leave")) {
             mFirestore.collection("users")
                     .whereEqualTo("userid", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -279,6 +287,12 @@ public class AllianceActivity extends AppCompatActivity {
                     });
         }
     }
+
+    /**
+     * Goes back to main menu.
+     *
+     * @param view
+     */
     public void onBackButtonClicked(View view) {
         setContentView(R.layout.alliance_search);
     }
