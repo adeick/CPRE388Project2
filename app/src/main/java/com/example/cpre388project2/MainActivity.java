@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
                                 DocumentSnapshot userInfo = task.getResult().getDocuments().get(0);
                                 userDocRef = userInfo.getReference();
                                 // Set up user from existing data
-                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"), userInfo.getDouble("storagecount").intValue(), 0);
+                                bitcoinStorageModel.initialize((Integer) userInfo.getDouble("storagelevel").intValue(), userInfo.getLong("bitcoins"), userInfo.getDouble("storagecount").intValue(), userInfo.getDouble("customimageid").intValue());
 
                                 ArrayList<HashMap> tMaps = (ArrayList<HashMap>) userInfo.get("towers");
                                 for (int i = 0; i < tMaps.size(); i++) {
